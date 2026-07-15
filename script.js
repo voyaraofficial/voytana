@@ -1,70 +1,21 @@
-const $=s=>document.querySelector(s), $$=s=>document.querySelectorAll(s);
-const budgetRange=$("#budgetRange"), budgetValue=$("#budgetValue");
-const fmt=n=>Number(n).toLocaleString("it-IT");
-
-function setBudget(v){
-  budgetRange.value=v;
-  budgetValue.textContent=fmt(v);
-  $$("#budgetChips button").forEach(b=>b.classList.toggle("active",b.dataset.value===String(v)));
-}
-budgetRange.addEventListener("input",e=>setBudget(e.target.value));
-$$("#budgetChips button").forEach(b=>b.addEventListener("click",()=>setBudget(b.dataset.value)));
-
-const obs=new IntersectionObserver(entries=>entries.forEach(e=>{
-  if(e.isIntersecting){e.target.classList.add("visible");obs.unobserve(e.target)}
-}),{threshold:.12});
-$$(".reveal").forEach(el=>obs.observe(el));
-
-window.addEventListener("scroll",()=>{
-  const h=document.documentElement.scrollHeight-innerHeight;
-  $(".progress").style.width=`${Math.min(100,scrollY/h*100)}%`;
-});
-
-function toast(message){
-  const el=$("#toast");
-  el.textContent=message;
-  el.classList.add("show");
-  clearTimeout(window.toastTimer);
-  window.toastTimer=setTimeout(()=>el.classList.remove("show"),2600);
-}
-
-$("#generateTrips").addEventListener("click",()=>{
-  const btn=$("#generateTrips");
-  btn.classList.add("loading");
-  btn.disabled=true;
-  setTimeout(()=>{
-    btn.classList.remove("loading");
-    btn.disabled=false;
-    $("#proposte").scrollIntoView({behavior:"smooth"});
-    toast("Tre proposte create per il tuo budget.");
-  },1100);
-});
-
-$("#heroSurprise").addEventListener("click",()=>{
-  setBudget(1500);
-  $("#vibeSelect").value="Sorprendimi";
-  $("#live").scrollIntoView({behavior:"smooth"});
-  toast("Modalità Sorprendimi attivata.");
-});
-
-$("#moreTrips").addEventListener("click",()=>toast("Nuove proposte disponibili nella versione completa."));
-$$(".trip-media button").forEach(btn=>btn.addEventListener("click",()=>{
-  btn.classList.toggle("saved");
-  btn.textContent=btn.classList.contains("saved")?"♥":"♡";
-}));
-
-$("#waitlistForm").addEventListener("submit",e=>{
-  e.preventDefault();
-  const email=$("#emailInput").value.trim();
-  if(!email)return;
-  localStorage.setItem("voytana_waitlist_email",email);
-  $("#successMessage").classList.add("show");
-  e.target.reset();
-});
-
-$("#languageSelect").addEventListener("change",e=>{
-  localStorage.setItem("voytana_language",e.target.value);
-  toast("Lingua selezionata: "+e.target.value.toUpperCase());
-});
-const savedLang=localStorage.getItem("voytana_language");
-if(savedLang)$("#languageSelect").value=savedLang;
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const trips=[
+{city:'Barcellona',country:'Spagna',img:'https://images.unsplash.com/photo-1583422409516-2895a77efded?auto=format&fit=crop&w=1000&q=88',v:['city','sea'],n:3,stars:4,r:4.7,base:720,a:120,c:75,f:['package','hotel','flight'],p:['beach','center','family','couple','pool'],from:['NAP','ROM','MIL'],text:'Architettura, mare e tapas. Una fuga urbana completa e vivace.'},
+{city:'Atene',country:'Grecia',img:'https://images.unsplash.com/photo-1555993539-1732b0258235?auto=format&fit=crop&w=1000&q=88',v:['city','sea'],n:3,stars:4,r:4.8,base:680,a:110,c:65,f:['package','hotel','flight'],p:['center','family','couple','pool'],from:['NAP','ROM','MIL','BLQ'],text:'Storia, rooftop e cucina autentica. Ottimo equilibrio tra qualità e prezzo.'},
+{city:'Cracovia',country:'Polonia',img:'https://images.unsplash.com/photo-1607427293702-036933bbf746?auto=format&fit=crop&w=1000&q=88',v:['city'],n:4,stars:4,r:4.6,base:560,a:90,c:55,f:['package','hotel','flight'],p:['center','family','couple'],from:['NAP','ROM','MIL','BLQ','VCE'],text:'Atmosfera, cultura e grande convenienza. Più giorni senza sforare.'},
+{city:'Madeira',country:'Portogallo',img:'https://images.unsplash.com/photo-1484291470158-b8f8d608850d?auto=format&fit=crop&w=1000&q=88',v:['nature','relax'],n:5,stars:4,r:4.9,base:930,a:150,c:90,f:['package','allinclusive','hotel'],p:['pool','spa','couple','family'],from:['ROM','MIL'],text:'Oceano, natura e design. La scelta ideale per relax e scoperta.'},
+{city:'Istanbul',country:'Turchia',img:'https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?auto=format&fit=crop&w=1000&q=88',v:['city','business'],n:4,stars:4,r:4.7,base:760,a:125,c:70,f:['package','hotel','flight'],p:['center','family','couple','spa'],from:['NAP','ROM','MIL'],text:'Cultura, rooftop e sapori. Tanto valore in pochi giorni.'},
+{city:'Malta',country:'Malta',img:'https://images.unsplash.com/photo-1514222134-b57cbb8ce073?auto=format&fit=crop&w=1000&q=88',v:['sea','relax'],n:5,stars:4,r:4.6,base:850,a:135,c:80,f:['package','allinclusive','hotel'],p:['beach','pool','family','couple'],from:['NAP','ROM','MIL'],text:'Mare, storia e clima piacevole. Una vacanza semplice da vivere.'},
+{city:'Praga',country:'Repubblica Ceca',img:'https://images.unsplash.com/photo-1541849546-216549ae216d?auto=format&fit=crop&w=1000&q=88',v:['city','business'],n:3,stars:4,r:4.8,base:620,a:105,c:60,f:['package','hotel','flight'],p:['center','couple','family','pet'],from:['ROM','MIL','BLQ','VCE'],text:'Elegante, compatta e romantica. Ideale per un city break.'},
+{city:'Tenerife',country:'Spagna',img:'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1000&q=88',v:['sea','relax','nature'],n:7,stars:4,r:4.8,base:1180,a:180,c:105,f:['package','allinclusive','hotel'],p:['beach','pool','spa','family','couple'],from:['ROM','MIL'],text:'Sole, oceano e resort. La proposta completa per staccare davvero.'},
+{city:'Dubai',country:'Emirati',img:'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=1000&q=88',v:['city','relax','business'],n:5,stars:5,r:4.9,base:1450,a:230,c:130,f:['package','allinclusive','hotel'],p:['pool','spa','center','family','couple'],from:['ROM','MIL'],text:'Design, servizi e spettacolo. Una proposta premium ad alto impatto.'}
+];
+let current=[],offset=0;const range=$('#budgetRange'),val=$('#budgetValue');const fmt=n=>Number(n).toLocaleString('it-IT');
+function setBudget(v){range.value=v;val.textContent=fmt(v);$$('.quick button').forEach(b=>b.classList.toggle('active',b.dataset.budget===String(v)))}range.oninput=e=>setBudget(e.target.value);$$('.quick button').forEach(b=>b.onclick=()=>setBudget(b.dataset.budget));
+$('#toggle').onclick=()=>{$('#adv').classList.toggle('open');$('#toggle').textContent=$('#adv').classList.contains('open')?'Nascondi parametri avanzati ▴':'Mostra tutti i parametri ▾'};$$('.pref').forEach(b=>b.onclick=()=>b.classList.toggle('active'));$$('.tab').forEach(b=>b.onclick=()=>{$$('.tab').forEach(x=>x.classList.remove('active'));b.classList.add('active');let m=b.dataset.mode;if(m==='weekend')$('#duration').value='2';if(m==='business')$('#vibe').value='business';if(['package','flight','hotel'].includes(m))$('#formula').value=m});
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(window.tt);window.tt=setTimeout(()=>t.classList.remove('show'),2500)}
+function params(){return{budget:+range.value,dep:$('#departure').value,n:+$('#duration').value,a:+$('#adults').value,c:+$('#children').value,v:$('#vibe').value,f:$('#formula').value,stars:+$('#stars').value,reserve:+$('#reserve').value,sort:$('#sort').value,prefs:$$('.pref.active').map(b=>b.dataset.pref)}}
+function evaluate(t,p){let cost=Math.round((t.base+t.a*p.a+t.c*p.c)*(.72+.28*(p.n/t.n)));if(cost>p.budget-p.reserve||!t.from.includes(p.dep)||(p.stars&&t.stars<p.stars)||(p.v!=='any'&&!t.v.includes(p.v))||!t.f.includes(p.f))return null;let matched=p.prefs.filter(x=>t.p.includes(x)).length;if(p.prefs.length&&!matched)return null;let score=Math.min(99,Math.round(50+t.r*6+matched*7-Math.abs(p.n-t.n)*3+Math.min(10,(p.budget-cost)/100)+(p.n===t.n?8:0)));return{...t,cost,score,residual:p.budget-cost,matched,flight:Math.round(cost*.36),hotel:Math.round(cost*.49),extras:Math.round(cost*.15)}}
+function search(reset=true){if(reset)offset=0;let p=params();current=trips.map(t=>evaluate(t,p)).filter(Boolean);current.sort((a,b)=>p.sort==='price'?a.cost-b.cost:p.sort==='rating'?b.r-a.r:b.score-a.score);render(p)}
+function render(p){let slice=current.slice(offset,offset+3),res=$('#results');res.innerHTML='';if(!slice.length){$('#empty').classList.add('show');$('#summary').classList.remove('show');return}else $('#empty').classList.remove('show');$('#summary').classList.add('show');$('#summary').innerHTML=`<strong>${p.a+p.c} viaggiatori · ${p.n} notti · partenza ${p.dep} · budget €${fmt(p.budget)}</strong><span>${current.length} proposte compatibili</span>`;slice.forEach((t,i)=>res.insertAdjacentHTML('beforeend',`<article class="card ${i===0?'best':''}">${i===0?'<div class="best-label">SCELTA VOYTANA</div>':''}<div class="image" style="background-image:url('${t.img}')"><span class="match">${t.score}% compatibile</span></div><div class="body"><span class="country">${t.country}</span><div class="title-row"><h3>${t.city}</h3><span class="rating">${t.r} ★</span></div><p>${t.text}</p><div class="reason">Scelta perché rispetta il budget, offre ${t.stars}★ e corrisponde alle preferenze selezionate.</div><div class="meta"><span>✈ Volo incluso</span><span>🏨 ${p.n} notti</span><span>⭐ ${t.stars} stelle</span><span>👥 ${p.a+p.c} persone</span></div><div class="breakdown"><div><small>Volo</small><strong>€${fmt(t.flight)}</strong></div><div><small>Hotel</small><strong>€${fmt(t.hotel)}</strong></div><div><small>Extra</small><strong>€${fmt(t.extras)}</strong></div></div><div class="price-row"><div><small>Totale stimato</small><strong>€${fmt(t.cost)}</strong><div class="residual">Restano €${fmt(t.residual)}</div></div><button class="details" onclick="toast('Dettagli e prenotazione saranno collegati ai partner affiliati.')">Dettagli →</button></div></div></article>`));$('#resultsSection').scrollIntoView({behavior:'smooth'})}
+$('#searchBtn').onclick=()=>{let b=$('#searchBtn');b.textContent='Sto selezionando…';setTimeout(()=>{search(true);b.textContent='Trova le mie 3 migliori proposte'},550)};$('#more').onclick=()=>{if(!current.length)return search(true);offset+=3;if(offset>=current.length)offset=0;render(params())};$('#surprise').onclick=()=>{$('#vibe').value='any';$$('.pref').forEach(b=>b.classList.remove('active'));setBudget(1500);toast('Modalità Sorprendimi attivata.')};$('#waitForm').onsubmit=e=>{e.preventDefault();localStorage.setItem('voytana_waitlist_email',$('#email').value.trim());$('#success').classList.add('show');e.target.reset()};let d=new Date();d.setDate(d.getDate()+30);$('#dateFrom').value=d.toISOString().slice(0,10);search(true);
