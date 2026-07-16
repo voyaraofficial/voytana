@@ -1,39 +1,162 @@
-const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
-const trips=[
-{city:'Barcellona',country:'Spagna',img:'https://images.unsplash.com/photo-1583422409516-2895a77efded?auto=format&fit=crop&w=1000&q=88',v:['city','sea'],n:3,stars:4,r:4.7,base:720,a:120,c:75,f:['package','hotel','flight'],p:['beach','center','family','couple','pool'],from:['NAP','ROM','MIL'],text:'Architettura, mare e tapas. Una fuga urbana completa e vivace.'},
-{city:'Atene',country:'Grecia',img:'https://images.unsplash.com/photo-1555993539-1732b0258235?auto=format&fit=crop&w=1000&q=88',v:['city','sea'],n:3,stars:4,r:4.8,base:680,a:110,c:65,f:['package','hotel','flight'],p:['center','family','couple','pool'],from:['NAP','ROM','MIL','BLQ'],text:'Storia, rooftop e cucina autentica. Ottimo equilibrio tra qualità e prezzo.'},
-{city:'Cracovia',country:'Polonia',img:'https://images.unsplash.com/photo-1607427293702-036933bbf746?auto=format&fit=crop&w=1000&q=88',v:['city'],n:4,stars:4,r:4.6,base:560,a:90,c:55,f:['package','hotel','flight'],p:['center','family','couple'],from:['NAP','ROM','MIL','BLQ','VCE'],text:'Atmosfera, cultura e grande convenienza. Più giorni senza sforare.'},
-{city:'Madeira',country:'Portogallo',img:'https://images.unsplash.com/photo-1484291470158-b8f8d608850d?auto=format&fit=crop&w=1000&q=88',v:['nature','relax'],n:5,stars:4,r:4.9,base:930,a:150,c:90,f:['package','allinclusive','hotel'],p:['pool','spa','couple','family'],from:['ROM','MIL'],text:'Oceano, natura e design. La scelta ideale per relax e scoperta.'},
-{city:'Istanbul',country:'Turchia',img:'https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?auto=format&fit=crop&w=1000&q=88',v:['city','business'],n:4,stars:4,r:4.7,base:760,a:125,c:70,f:['package','hotel','flight'],p:['center','family','couple','spa'],from:['NAP','ROM','MIL'],text:'Cultura, rooftop e sapori. Tanto valore in pochi giorni.'},
-{city:'Malta',country:'Malta',img:'https://images.unsplash.com/photo-1514222134-b57cbb8ce073?auto=format&fit=crop&w=1000&q=88',v:['sea','relax'],n:5,stars:4,r:4.6,base:850,a:135,c:80,f:['package','allinclusive','hotel'],p:['beach','pool','family','couple'],from:['NAP','ROM','MIL'],text:'Mare, storia e clima piacevole. Una vacanza semplice da vivere.'},
-{city:'Praga',country:'Repubblica Ceca',img:'https://images.unsplash.com/photo-1541849546-216549ae216d?auto=format&fit=crop&w=1000&q=88',v:['city','business'],n:3,stars:4,r:4.8,base:620,a:105,c:60,f:['package','hotel','flight'],p:['center','couple','family','pet'],from:['ROM','MIL','BLQ','VCE'],text:'Elegante, compatta e romantica. Ideale per un city break.'},
-{city:'Tenerife',country:'Spagna',img:'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1000&q=88',v:['sea','relax','nature'],n:7,stars:4,r:4.8,base:1180,a:180,c:105,f:['package','allinclusive','hotel'],p:['beach','pool','spa','family','couple'],from:['ROM','MIL'],text:'Sole, oceano e resort. La proposta completa per staccare davvero.'},
-{city:'Dubai',country:'Emirati',img:'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=1000&q=88',v:['city','relax','business'],n:5,stars:5,r:4.9,base:1450,a:230,c:130,f:['package','allinclusive','hotel'],p:['pool','spa','center','family','couple'],from:['ROM','MIL'],text:'Design, servizi e spettacolo. Una proposta premium ad alto impatto.'}
+const destinations = [
+  {name:"Lisbona", country:"Portogallo", price:520, rating:"9,1", label:"Miglior rapporto qualità/prezzo", image:"https://images.unsplash.com/photo-1555881400-74d7acaacd8b?auto=format&fit=crop&w=900&q=80", features:["Volo A/R","3 notti","Colazione"]},
+  {name:"Budapest", country:"Ungheria", price:430, rating:"8,9", label:"Più conveniente", image:"https://images.unsplash.com/photo-1549877452-9c387954fbc2?auto=format&fit=crop&w=900&q=80", features:["Volo A/R","3 notti","Centro città"]},
+  {name:"Santorini", country:"Grecia", price:690, rating:"9,3", label:"Più desiderata", image:"https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=900&q=80", features:["Volo A/R","4 notti","Vista mare"]},
+  {name:"Praga", country:"Repubblica Ceca", price:470, rating:"9,0", label:"Weekend ideale", image:"https://images.unsplash.com/photo-1541849546-216549ae216d?auto=format&fit=crop&w=900&q=80", features:["Volo A/R","3 notti","Hotel 4★"]},
+  {name:"Valencia", country:"Spagna", price:560, rating:"8,8", label:"Sole e città", image:"https://images.unsplash.com/photo-1597841221817-40e2e5116b4f?auto=format&fit=crop&w=900&q=80", features:["Volo A/R","4 notti","Spiaggia vicina"]},
+  {name:"Cracovia", country:"Polonia", price:390, rating:"8,7", label:"Low cost", image:"https://images.unsplash.com/photo-1519197924294-4ba991a11128?auto=format&fit=crop&w=900&q=80", features:["Volo A/R","3 notti","Posizione centrale"]},
+  {name:"Marrakech", country:"Marocco", price:640, rating:"9,2", label:"Esperienza unica", image:"https://images.unsplash.com/photo-1597212618440-806262de4f6b?auto=format&fit=crop&w=900&q=80", features:["Volo A/R","4 notti","Riad"]},
+  {name:"Vienna", country:"Austria", price:610, rating:"9,0", label:"Elegante e culturale", image:"https://images.unsplash.com/photo-1516550893923-42d28e5677af?auto=format&fit=crop&w=900&q=80", features:["Volo A/R","3 notti","Hotel 4★"]},
+  {name:"Malta", country:"Malta", price:580, rating:"8,9", label:"Mare vicino", image:"https://images.unsplash.com/photo-1570015313224-274b942f9c46?auto=format&fit=crop&w=900&q=80", features:["Volo A/R","4 notti","Colazione"]}
 ];
-let current=[],offset=0;const range=$('#budgetRange'),val=$('#budgetValue');const fmt=n=>Number(n).toLocaleString('it-IT');
-function setBudget(v){range.value=v;val.textContent=fmt(v);$$('.quick button').forEach(b=>b.classList.toggle('active',b.dataset.budget===String(v)))}range.oninput=e=>setBudget(e.target.value);$$('.quick button').forEach(b=>b.onclick=()=>setBudget(b.dataset.budget));
-$('#toggle').onclick=()=>{$('#adv').classList.toggle('open');$('#toggle').textContent=$('#adv').classList.contains('open')?'Nascondi parametri avanzati ▴':'Mostra tutti i parametri ▾'};$$('.pref').forEach(b=>b.onclick=()=>b.classList.toggle('active'));$$('.tab').forEach(b=>b.onclick=()=>{$$('.tab').forEach(x=>x.classList.remove('active'));b.classList.add('active');let m=b.dataset.mode;if(m==='weekend')$('#duration').value='2';if(m==='business')$('#vibe').value='business';if(['package','flight','hotel'].includes(m))$('#formula').value=m});
-function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(window.tt);window.tt=setTimeout(()=>t.classList.remove('show'),2500)}
-function params(){return{budget:+range.value,dep:$('#departure').value,n:+$('#duration').value,a:+$('#adults').value,c:+$('#children').value,v:$('#vibe').value,f:$('#formula').value,stars:+$('#stars').value,reserve:+$('#reserve').value,sort:$('#sort').value,prefs:$$('.pref.active').map(b=>b.dataset.pref)}}
-function evaluate(t,p){
-  const rawCost=Math.round((t.base+t.a*p.a+t.c*p.c)*(.72+.28*(p.n/t.n)));
-  const ceiling=p.budget-p.reserve;
-  if(rawCost>ceiling||!t.from.includes(p.dep)||(p.stars&&t.stars<p.stars)||(p.v!=='any'&&!t.v.includes(p.v))||!t.f.includes(p.f))return null;
-  const matched=p.prefs.filter(x=>t.p.includes(x)).length;
-  if(p.prefs.length&&!matched)return null;
-  const seed=[...t.city].reduce((sum,ch)=>sum+ch.charCodeAt(0),0);
-  const utilization=.90+(seed%9)/100;
-  const targetCost=Math.round((ceiling*utilization)/10)*10;
-  const cost=Math.min(ceiling,Math.max(rawCost,targetCost));
-  const residual=p.budget-cost;
-  const budgetDistance=Math.abs(ceiling-cost);
-  const budgetFit=Math.max(0,40-(budgetDistance/Math.max(ceiling,1))*100);
-  const preferenceFit=matched*6;
-  const durationFit=Math.max(0,10-Math.abs(p.n-t.n)*2);
-  const qualityFit=t.r*7;
-  const score=Math.min(99,Math.round(budgetFit+preferenceFit+durationFit+qualityFit));
-  return{...t,rawCost,cost,score,residual,matched,budgetUse:Math.round((cost/p.budget)*100),flight:Math.round(cost*.36),hotel:Math.round(cost*.49),extras:Math.round(cost*.15)}
+
+let offset = 0;
+let mode = "package";
+
+const $ = (id) => document.getElementById(id);
+const budget = $("budget");
+const budgetRange = $("budgetRange");
+const resultsGrid = $("resultsGrid");
+
+function formatDate(date) {
+  return date.toISOString().split("T")[0];
 }
-function search(reset=true){if(reset)offset=0;let p=params();current=trips.map(t=>evaluate(t,p)).filter(Boolean);current.sort((a,b)=>p.sort==='price'?a.cost-b.cost:p.sort==='rating'?b.r-a.r:(Math.abs((p.budget-p.reserve)-a.cost)-Math.abs((p.budget-p.reserve)-b.cost)||b.score-a.score));render(p)}
-function render(p){let slice=current.slice(offset,offset+3),res=$('#results');res.innerHTML='';if(!slice.length){$('#empty').classList.add('show');$('#summary').classList.remove('show');return}else $('#empty').classList.remove('show');$('#summary').classList.add('show');$('#summary').innerHTML=`<strong>${p.a+p.c} viaggiatori · ${p.n} notti · partenza ${p.dep} · budget €${fmt(p.budget)}</strong><span>${current.length} proposte compatibili</span>`;slice.forEach((t,i)=>res.insertAdjacentHTML('beforeend',`<article class="card ${i===0?'best':''}">${i===0?'<div class="best-label">SCELTA VOYTANA</div>':''}<div class="image" style="background-image:url('${t.img}')"><span class="match">${t.score}% compatibile</span></div><div class="body"><span class="country">${t.country}</span><div class="title-row"><h3>${t.city}</h3><span class="rating">${t.r} ★</span></div><p>${t.text}</p><div class="reason">Scelta perché utilizza il ${t.budgetUse}% del budget totale, non supera il limite impostato, offre ${t.stars}★ e rispetta le preferenze selezionate.</div><div class="meta"><span>✈ Volo incluso</span><span>🏨 ${p.n} notti</span><span>⭐ ${t.stars} stelle</span><span>👥 ${p.a+p.c} persone</span></div><div class="breakdown"><div><small>Volo</small><strong>€${fmt(t.flight)}</strong></div><div><small>Hotel</small><strong>€${fmt(t.hotel)}</strong></div><div><small>Extra</small><strong>€${fmt(t.extras)}</strong></div></div><div class="price-row"><div><small>Totale stimato</small><strong>€${fmt(t.cost)}</strong><div class="residual">Restano €${fmt(t.residual)}</div></div><button class="details" onclick="toast('Dettagli e prenotazione saranno collegati ai partner affiliati.')">Dettagli →</button></div></div></article>`));$('#resultsSection').scrollIntoView({behavior:'smooth'})}
-$('#searchBtn').onclick=()=>{let b=$('#searchBtn');b.textContent='Sto selezionando…';setTimeout(()=>{search(true);b.textContent='Trova le mie 3 migliori proposte'},550)};$('#more').onclick=()=>{if(!current.length)return search(true);offset+=3;if(offset>=current.length)offset=0;render(params())};$('#surprise').onclick=()=>{$('#vibe').value='any';$$('.pref').forEach(b=>b.classList.remove('active'));setBudget(1500);toast('Modalità Sorprendimi attivata.')};$('#waitForm').onsubmit=e=>{e.preventDefault();localStorage.setItem('voytana_waitlist_email',$('#email').value.trim());$('#success').classList.add('show');e.target.reset()};let d=new Date();d.setDate(d.getDate()+30);$('#dateFrom').value=d.toISOString().slice(0,10);search(true);
+
+const today = new Date();
+const start = new Date(today);
+start.setDate(today.getDate() + 21);
+const end = new Date(start);
+end.setDate(start.getDate() + 3);
+$("startDate").value = formatDate(start);
+$("endDate").value = formatDate(end);
+$("startDate").min = formatDate(today);
+$("endDate").min = formatDate(today);
+
+function createCard(item) {
+  const adjusted = Math.max(190, Math.round(item.price * (Number(budget.value) / 600) * 0.88));
+  return `<article class="trip-card">
+    <div class="trip-image" style="background-image:url('${item.image}')">
+      <span class="tag">${item.label}</span>
+      <button class="favorite" type="button" aria-label="Salva ${item.name}">♡</button>
+    </div>
+    <div class="trip-body">
+      <h3>${item.name}</h3>
+      <div class="trip-meta">${item.country} · partenza da ${$("departure").value || "Napoli"}</div>
+      <div class="rating-row"><span>Recensioni eccellenti</span><span class="rating">${item.rating}</span></div>
+      <div class="features">${item.features.map(f=>`<span>${f}</span>`).join("")}</div>
+      <div class="price-row">
+        <div><small>Totale indicativo</small><span class="price">€${adjusted}</span></div>
+        <button class="card-btn" type="button">Scopri</button>
+      </div>
+    </div>
+  </article>`;
+}
+
+function renderResults() {
+  const items = [0,1,2].map(i => destinations[(offset+i) % destinations.length]);
+  resultsGrid.innerHTML = items.map(createCard).join("");
+  $("resultsSubtitle").textContent = `Esempi dimostrativi basati su un budget di €${budget.value} per ${$("travelers").value} viaggiatori.`;
+  document.querySelectorAll(".favorite").forEach(btn => btn.addEventListener("click", () => {
+    btn.textContent = btn.textContent === "♡" ? "♥" : "♡";
+  }));
+}
+
+function validateForm() {
+  const error = $("formError");
+  error.textContent = "";
+  const startDate = new Date($("startDate").value);
+  const endDate = new Date($("endDate").value);
+  if (Number(budget.value) < 100) return error.textContent = "Inserisci un budget minimo di €100.", false;
+  if (!$("departure").value.trim()) return error.textContent = "Inserisci una città o un aeroporto di partenza.", false;
+  if (!$("startDate").value || !$("endDate").value) return error.textContent = "Seleziona le date del viaggio.", false;
+  if (endDate <= startDate) return error.textContent = "La data di ritorno deve essere successiva alla partenza.", false;
+  return true;
+}
+
+$("tripForm").addEventListener("submit", async (event) => {
+  event.preventDefault();
+  if (!validateForm()) return;
+  const box = $("assistantBox");
+  const text = $("assistantText");
+  box.hidden = false;
+  const steps = [
+    "Sto verificando budget, date e durata del viaggio...",
+    "Sto confrontando le combinazioni con il miglior rapporto qualità-prezzo...",
+    "Sto organizzando tre proposte facili da confrontare..."
+  ];
+  for (const step of steps) {
+    text.textContent = step;
+    await new Promise(r => setTimeout(r, 650));
+  }
+  offset = 0;
+  renderResults();
+  box.hidden = true;
+  $("results").scrollIntoView({behavior:"smooth"});
+});
+
+$("moreResultsBtn").addEventListener("click", () => {
+  offset = (offset + 3) % destinations.length;
+  renderResults();
+});
+
+document.querySelectorAll(".tab").forEach(tab => tab.addEventListener("click", () => {
+  document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+  tab.classList.add("active");
+  mode = tab.dataset.mode;
+  if (mode === "surprise") $("travelType").value = "any";
+}));
+
+$("advancedBtn").addEventListener("click", () => {
+  $("advancedPanel").classList.toggle("open");
+  $("advancedBtn").textContent = $("advancedPanel").classList.contains("open") ? "Nascondi preferenze −" : "Preferenze avanzate +";
+});
+
+$("menuBtn").addEventListener("click", () => $("mobileMenu").classList.toggle("open"));
+
+budgetRange.addEventListener("input", () => {
+  budget.value = budgetRange.value;
+  updateBudgetLive();
+  renderResults();
+});
+budget.addEventListener("input", () => {
+  budgetRange.value = Math.min(2000, Math.max(150, Number(budget.value) || 150));
+  updateBudgetLive();
+});
+
+function updateBudgetLive() {
+  const value = Number(budgetRange.value);
+  $("liveBudget").textContent = `€${value.toLocaleString("it-IT")}`;
+  let message = "Ottimo per una fuga breve e conveniente.";
+  if (value >= 500) message = "Ottimo per un weekend europeo per 2 persone.";
+  if (value >= 900) message = "Buon budget per 4–6 notti in Europa.";
+  if (value >= 1400) message = "Puoi valutare soggiorni più lunghi o destinazioni premium.";
+  $("budgetMessage").textContent = message;
+}
+
+document.querySelectorAll("[data-quick]").forEach(btn => btn.addEventListener("click", () => {
+  const q = btn.dataset.quick;
+  if (q === "lowcost") budget.value = 350;
+  if (q === "weekend") budget.value = 500;
+  if (q === "family") { budget.value = 1000; $("travelers").value = "4"; $("travelType").value = "family"; }
+  if (q === "business") $("travelType").value = "business";
+  if (q === "surprise") mode = "surprise";
+  budgetRange.value = Math.min(2000, Math.max(150, Number(budget.value)));
+  updateBudgetLive();
+  renderResults();
+  $("search").scrollIntoView({behavior:"smooth"});
+}));
+
+$("lowCostBtn").addEventListener("click", () => {
+  budget.value = 350; budgetRange.value = 350; updateBudgetLive(); renderResults();
+  $("search").scrollIntoView({behavior:"smooth"});
+});
+
+$("newsletterForm").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const email = $("email").value.trim();
+  $("newsletterMessage").textContent = email ? "Grazie! La demo ha registrato la tua richiesta localmente." : "Inserisci un indirizzo email valido.";
+  if (email) e.target.reset();
+});
+
+renderResults();
+updateBudgetLive();
