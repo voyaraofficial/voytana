@@ -1,249 +1,258 @@
-const $=id=>document.getElementById(id);
+const $ = (s) => document.querySelector(s);
+const $$ = (s) => [...document.querySelectorAll(s)];
+const formatEuro = (n) => Number(n).toLocaleString("it-IT");
 
-const state={
-  adults:2,
-  children:0,
-  rooms:1,
-  childAges:[],
-  mode:"soggiorno",
-  offset:0,
-  slide:0
-};
+const trips = [
+  {city:"Vienna",country:"Austria",img:"https://images.unsplash.com/photo-1516550893923-42d28e5677af?auto=format&fit=crop&w=1000&q=86",type:["city","package","weekend"],prefs:["city","direct","breakfast"],from:["NAP","ROM","MIL","BLQ","VCE"],stars:4,rating:4.8,baseNight:118,flight:125,description:"Elegante, culturale e perfetta per un weekend ben organizzato."},
+  {city:"Budapest",country:"Ungheria",img:"https://images.unsplash.com/photo-1549877452-9c387954fbc2?auto=format&fit=crop&w=1000&q=86",type:["city","package","weekend","low"],prefs:["city","direct","breakfast"],from:["NAP","ROM","MIL","BLQ"],stars:4,rating:4.7,baseNight:92,flight:105,description:"Terme, panorami sul Danubio e ottimo rapporto qualità-prezzo."},
+  {city:"Barcellona",country:"Spagna",img:"https://images.unsplash.com/photo-1539037116277-4db20889f2d4?auto=format&fit=crop&w=1000&q=86",type:["city","sea","package","weekend"],prefs:["city","sea","direct","breakfast"],from:["NAP","ROM","MIL","BLQ","VCE","TRN"],stars:4,rating:4.8,baseNight:145,flight:135,description:"Mare, architettura e vita urbana in un'unica destinazione."},
+  {city:"Praga",country:"Repubblica Ceca",img:"https://images.unsplash.com/photo-1541849546-216549ae216d?auto=format&fit=crop&w=1000&q=86",type:["city","package","weekend","low"],prefs:["city","direct","breakfast"],from:["NAP","ROM","MIL","BLQ"],stars:4,rating:4.8,baseNight:98,flight:115,description:"Atmosfera fiabesca, centro storico compatto e prezzi accessibili."},
+  {city:"Marrakech",country:"Marocco",img:"https://images.unsplash.com/photo-1597212618440-806262de4f6b?auto=format&fit=crop&w=1000&q=86",type:["city","package"],prefs:["city","breakfast"],from:["ROM","MIL","NAP"],stars:4,rating:4.7,baseNight:105,flight:180,description:"Colori, profumi e riad di charme per un viaggio diverso dal solito."},
+  {city:"Lisbona",country:"Portogallo",img:"https://images.unsplash.com/photo-1555881400-74d7acaacd8b?auto=format&fit=crop&w=1000&q=86",type:["city","sea","package","weekend"],prefs:["city","sea","breakfast"],from:["NAP","ROM","MIL"],stars:4,rating:4.8,baseNight:132,flight:165,description:"Quartieri autentici, oceano vicino e cucina memorabile."},
+  {city:"Tenerife",country:"Spagna",img:"https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1000&q=86",type:["sea","package","family"],prefs:["sea","family","direct"],from:["NAP","ROM","MIL"],stars:4,rating:4.7,baseNight:128,flight:220,description:"Clima mite, spiagge e strutture adatte anche alle famiglie."},
+  {city:"Creta",country:"Grecia",img:"https://images.unsplash.com/photo-1504512485720-7d83a16ee930?auto=format&fit=crop&w=1000&q=86",type:["sea","package","family"],prefs:["sea","family","breakfast"],from:["NAP","ROM","MIL","BLQ"],stars:4,rating:4.8,baseNight:136,flight:205,description:"Mare limpido, borghi e villaggi con formule flessibili."},
+  {city:"Sardegna",country:"Italia",img:"https://images.unsplash.com/photo-1529260830199-42c24126f198?auto=format&fit=crop&w=1000&q=86",type:["sea","package","family"],prefs:["sea","family"],from:["NAP","ROM","MIL","BLQ","TRN"],stars:4,rating:4.8,baseNight:148,flight:105,description:"Spiagge spettacolari e villaggi pensati per adulti e bambini."},
+  {city:"Dolomiti",country:"Italia",img:"https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1000&q=86",type:["mountain","hotel","family"],prefs:["mountain","family","breakfast"],from:["NAP","ROM","MIL","BLQ","VCE"],stars:4,rating:4.9,baseNight:155,flight:95,description:"Natura, aria pulita e hotel accoglienti per ogni stagione."},
+  {city:"Dubai",country:"Emirati Arabi Uniti",img:"https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=1000&q=86",type:["city","sea","package"],prefs:["city","sea","direct","breakfast"],from:["NAP","ROM","MIL"],stars:5,rating:4.8,baseNight:190,flight:310,description:"Architettura, spiagge e servizi di livello internazionale."},
+  {city:"Porto",country:"Portogallo",img:"https://images.unsplash.com/photo-1555881400-69f7c3d954d4?auto=format&fit=crop&w=1000&q=86",type:["city","package","weekend"],prefs:["city","breakfast"],from:["NAP","ROM","MIL"],stars:4,rating:4.8,baseNight:116,flight:155,description:"Panorami sul Douro, atmosfera autentica e ottima cucina."}
+];
 
-const datasets={
-  soggiorno:[
-    {name:"Maison Soleil",place:"Gallipoli, Italia",price:540,rating:"9,1",tag:"Miglior rapporto qualità-prezzo",image:"https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=82",features:["Hotel 4★","Colazione","Centro"]},
-    {name:"Casa Marina",place:"Sorrento, Italia",price:620,rating:"9,3",tag:"Più amata",image:"https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=900&q=82",features:["Vista mare","3 notti","Wi-Fi"]},
-    {name:"Palazzo Verde",place:"Roma, Italia",price:590,rating:"8,9",tag:"Scelta conveniente",image:"https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?auto=format&fit=crop&w=900&q=82",features:["Hotel 4★","Posizione centrale","Colazione"]},
-    {name:"Azure Rooms",place:"Malta",price:510,rating:"9,0",tag:"Mare vicino",image:"https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=900&q=82",features:["4 notti","Piscina","Colazione"]},
-    {name:"City Nest",place:"Praga, Cechia",price:460,rating:"8,8",tag:"Weekend ideale",image:"https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=900&q=82",features:["3 notti","Centro città","Hotel 4★"]},
-    {name:"Riad Lumière",place:"Marrakech, Marocco",price:640,rating:"9,2",tag:"Esperienza unica",image:"https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=900&q=82",features:["4 notti","Riad","Colazione"]}
-  ],
-  volo:[
-    {name:"Napoli → Parigi",place:"Volo A/R",price:210,rating:"8,8",tag:"Miglior orario",image:"https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=900&q=82",features:["Diretto","Bagaglio piccolo","A/R"]},
-    {name:"Napoli → Londra",place:"Volo A/R",price:190,rating:"8,6",tag:"Più conveniente",image:"https://images.unsplash.com/photo-1483450388369-9ed95738483c?auto=format&fit=crop&w=900&q=82",features:["Diretto","A/R","Orari comodi"]},
-    {name:"Napoli → Barcellona",place:"Volo A/R",price:230,rating:"9,0",tag:"Scelta Voytana",image:"https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&w=900&q=82",features:["Diretto","A/R","Weekend"]},
-    {name:"Napoli → Vienna",place:"Volo A/R",price:205,rating:"8,7",tag:"Ottimo prezzo",image:"https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=900&q=82",features:["Diretto","A/R","Bagaglio piccolo"]},
-    {name:"Napoli → Budapest",place:"Volo A/R",price:175,rating:"8,5",tag:"Low cost",image:"https://images.unsplash.com/photo-1483450388369-9ed95738483c?auto=format&fit=crop&w=900&q=82",features:["Diretto","A/R","Mattina"]},
-    {name:"Napoli → Valencia",place:"Volo A/R",price:220,rating:"8,9",tag:"Sole e città",image:"https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&w=900&q=82",features:["Diretto","A/R","Orari comodi"]}
-  ],
-  pacchetto:[
-    {name:"Lisbona",place:"Portogallo",price:520,rating:"9,1",tag:"Miglior rapporto qualità-prezzo",image:"https://images.unsplash.com/photo-1555881400-74d7acaacd8b?auto=format&fit=crop&w=900&q=82",features:["Volo A/R","3 notti","Colazione"]},
-    {name:"Budapest",place:"Ungheria",price:430,rating:"8,9",tag:"Più conveniente",image:"https://images.unsplash.com/photo-1549877452-9c387954fbc2?auto=format&fit=crop&w=900&q=82",features:["Volo A/R","3 notti","Centro città"]},
-    {name:"Santorini",place:"Grecia",price:690,rating:"9,3",tag:"Più desiderata",image:"https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=900&q=82",features:["Volo A/R","4 notti","Vista mare"]},
-    {name:"Praga",place:"Cechia",price:470,rating:"9,0",tag:"Weekend ideale",image:"https://images.unsplash.com/photo-1541849546-216549ae216d?auto=format&fit=crop&w=900&q=82",features:["Volo A/R","3 notti","Hotel 4★"]},
-    {name:"Valencia",place:"Spagna",price:560,rating:"8,8",tag:"Sole e città",image:"https://images.unsplash.com/photo-1597841221817-40e2e5116b4f?auto=format&fit=crop&w=900&q=82",features:["Volo A/R","4 notti","Spiaggia vicina"]},
-    {name:"Cracovia",place:"Polonia",price:390,rating:"8,7",tag:"Low cost",image:"https://images.unsplash.com/photo-1519197924294-4ba991a11128?auto=format&fit=crop&w=900&q=82",features:["Volo A/R","3 notti","Centro"]}
-  ],
-  weekend:[
-    {name:"Parigi in 2 notti",place:"Francia",price:460,rating:"9,0",tag:"Weekend romantico",image:"https://images.unsplash.com/photo-1499856871958-5b9627545d1a?auto=format&fit=crop&w=900&q=82",features:["Volo A/R","2 notti","Centro"]},
-    {name:"Atene in 3 notti",place:"Grecia",price:510,rating:"8,9",tag:"Più completo",image:"https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=900&q=82",features:["Volo A/R","3 notti","Colazione"]},
-    {name:"Roma in 1 notte",place:"Italia",price:280,rating:"8,8",tag:"Fuga veloce",image:"https://images.unsplash.com/photo-1529260830199-42c24126f198?auto=format&fit=crop&w=900&q=82",features:["Treno","1 notte","Centro"]},
-    {name:"Vienna in 2 notti",place:"Austria",price:490,rating:"9,1",tag:"Elegante",image:"https://images.unsplash.com/photo-1516550893923-42d28e5677af?auto=format&fit=crop&w=900&q=82",features:["Volo A/R","2 notti","Hotel 4★"]},
-    {name:"Malta in 3 notti",place:"Malta",price:540,rating:"8,9",tag:"Mare vicino",image:"https://images.unsplash.com/photo-1570015313224-274b942f9c46?auto=format&fit=crop&w=900&q=82",features:["Volo A/R","3 notti","Colazione"]},
-    {name:"Praga in 2 notti",place:"Cechia",price:420,rating:"8,8",tag:"Best seller",image:"https://images.unsplash.com/photo-1541849546-216549ae216d?auto=format&fit=crop&w=900&q=82",features:["Volo A/R","2 notti","Centro"]}
-  ],
-  lowcost:[
-    {name:"Cracovia",place:"Polonia",price:320,rating:"8,7",tag:"Low cost verificato",image:"https://images.unsplash.com/photo-1519197924294-4ba991a11128?auto=format&fit=crop&w=900&q=82",features:["Volo A/R","3 notti","Centro"]},
-    {name:"Budapest",place:"Ungheria",price:350,rating:"8,9",tag:"Miglior prezzo",image:"https://images.unsplash.com/photo-1549877452-9c387954fbc2?auto=format&fit=crop&w=900&q=82",features:["Volo A/R","3 notti","Hotel"]},
-    {name:"Tirana",place:"Albania",price:300,rating:"8,6",tag:"Super conveniente",image:"https://images.unsplash.com/photo-1544986581-efac024faf62?auto=format&fit=crop&w=900&q=82",features:["Volo A/R","3 notti","Colazione"]},
-    {name:"Bari",place:"Italia",price:260,rating:"8,8",tag:"Vicino e facile",image:"https://images.unsplash.com/photo-1602002418082-a4443e081dd1?auto=format&fit=crop&w=900&q=82",features:["Treno","2 notti","Centro"]},
-    {name:"Sofia",place:"Bulgaria",price:330,rating:"8,5",tag:"Budget smart",image:"https://images.unsplash.com/photo-1565008576549-57569a49371d?auto=format&fit=crop&w=900&q=82",features:["Volo A/R","3 notti","Hotel"]},
-    {name:"Palermo",place:"Italia",price:340,rating:"8,9",tag:"Mare low cost",image:"https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?auto=format&fit=crop&w=900&q=82",features:["Volo A/R","3 notti","Centro"]}
-  ],
-  famiglia:[
-    {name:"Serena Family Resort",place:"Calabria, Italia",price:1650,rating:"9,2",tag:"Migliore per famiglie",image:"https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=900&q=82",features:["All Inclusive","Mini club","Spiaggia"]},
-    {name:"Blue Marine Village",place:"Puglia, Italia",price:1780,rating:"9,1",tag:"Più completo",image:"https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=900&q=82",features:["All Inclusive","Animazione","Piscine"]},
-    {name:"Costa Verde Family Club",place:"Sicilia, Italia",price:1590,rating:"8,9",tag:"Miglior prezzo",image:"https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=900&q=82",features:["Mezza pensione","Mini club","Mare"]},
-    {name:"Adriatic Family Village",place:"Emilia-Romagna, Italia",price:1490,rating:"8,8",tag:"Ideale con bambini",image:"https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=82",features:["Mezza pensione","Animazione","Piscina"]},
-    {name:"Ionian Family Resort",place:"Basilicata, Italia",price:1710,rating:"9,0",tag:"Relax per tutti",image:"https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?auto=format&fit=crop&w=900&q=82",features:["All Inclusive","Spiaggia","Mini club"]},
-    {name:"Sardinia Family Escape",place:"Sardegna, Italia",price:1890,rating:"9,3",tag:"Più desiderato",image:"https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=900&q=82",features:["All Inclusive","Mare","Animazione"]}
-  ],
-  sorprendimi:[
-    {name:"Destinazione sorpresa: Porto",place:"Portogallo",price:480,rating:"9,0",tag:"Scelta Voytana",image:"https://images.unsplash.com/photo-1555881400-74d7acaacd8b?auto=format&fit=crop&w=900&q=82",features:["Volo A/R","3 notti","Colazione"]},
-    {name:"Destinazione sorpresa: Malta",place:"Malta",price:520,rating:"8,9",tag:"Mare e relax",image:"https://images.unsplash.com/photo-1570015313224-274b942f9c46?auto=format&fit=crop&w=900&q=82",features:["Volo A/R","4 notti","Piscina"]},
-    {name:"Destinazione sorpresa: Vienna",place:"Austria",price:570,rating:"9,1",tag:"Elegante e culturale",image:"https://images.unsplash.com/photo-1516550893923-42d28e5677af?auto=format&fit=crop&w=900&q=82",features:["Volo A/R","3 notti","Hotel 4★"]},
-    {name:"Destinazione sorpresa: Valencia",place:"Spagna",price:530,rating:"8,8",tag:"Sole e città",image:"https://images.unsplash.com/photo-1597841221817-40e2e5116b4f?auto=format&fit=crop&w=900&q=82",features:["Volo A/R","4 notti","Spiaggia"]},
-    {name:"Destinazione sorpresa: Praga",place:"Cechia",price:440,rating:"9,0",tag:"Weekend ideale",image:"https://images.unsplash.com/photo-1541849546-216549ae216d?auto=format&fit=crop&w=900&q=82",features:["Volo A/R","3 notti","Centro"]},
-    {name:"Destinazione sorpresa: Marrakech",place:"Marocco",price:620,rating:"9,2",tag:"Esperienza unica",image:"https://images.unsplash.com/photo-1597212618440-806262de4f6b?auto=format&fit=crop&w=900&q=82",features:["Volo A/R","4 notti","Riad"]}
-  ],
-  business:[
-    {name:"Milano Business Stay",place:"Milano, Italia",price:420,rating:"9,0",tag:"Vicino al centro",image:"https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=900&q=82",features:["Wi-Fi","Check-in rapido","Fattura"]},
-    {name:"Roma Executive Hotel",place:"Roma, Italia",price:460,rating:"8,9",tag:"Scelta professionale",image:"https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=900&q=82",features:["Business room","Colazione","Centro"]},
-    {name:"Torino Smart Stay",place:"Torino, Italia",price:390,rating:"8,7",tag:"Miglior prezzo",image:"https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=900&q=82",features:["Wi-Fi","Late check-in","Fattura"]},
-    {name:"Bologna Work Hotel",place:"Bologna, Italia",price:410,rating:"8,8",tag:"Comodo e veloce",image:"https://images.unsplash.com/photo-1497366811364-ccf3f4c1fcb0?auto=format&fit=crop&w=900&q=82",features:["Stazione vicina","Wi-Fi","Colazione"]},
-    {name:"Napoli Executive",place:"Napoli, Italia",price:400,rating:"8,9",tag:"Posizione strategica",image:"https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=900&q=82",features:["Centro","Wi-Fi","Fattura"]},
-    {name:"Firenze Business Hub",place:"Firenze, Italia",price:450,rating:"9,1",tag:"Più apprezzato",image:"https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=900&q=82",features:["Meeting area","Wi-Fi","Centro"]}
-  ]
-};
+let currentCategory = "package";
+let currentMode = "smart";
+let surprise = false;
+let resultOffset = 0;
+let evaluatedTrips = [];
 
-const modeTitles={
-  soggiorno:"Tre soggiorni facili da confrontare",
-  volo:"Tre voli selezionati per te",
-  pacchetto:"Tre pacchetti volo + hotel",
-  weekend:"Tre weekend selezionati per te",
-  lowcost:"Tre proposte low cost",
-  famiglia:"Tre villaggi famiglia selezionati",
-  sorprendimi:"Tre sorprese pensate per te",
-  business:"Tre soluzioni business"
-};
+const range = $("#budgetRange");
+const budgetValue = $("#budgetValue");
 
-function isoDate(date){return date.toISOString().split("T")[0]}
-const today=new Date();
-const start=new Date(today); start.setDate(today.getDate()+21);
-const end=new Date(today); end.setDate(today.getDate()+24);
-$("startDate").value=isoDate(start);
-$("endDate").value=isoDate(end);
-$("startDate").min=isoDate(today);
-$("endDate").min=isoDate(today);
-
-function updateGuests(){
-  $("adultsCount").textContent=state.adults;
-  $("childrenCount").textContent=state.children;
-  $("roomsCount").textContent=state.rooms;
-  $("guestsSummary").textContent=`${state.adults} ${state.adults===1?"adulto":"adulti"} · ${state.children} ${state.children===1?"bambino":"bambini"} · ${state.rooms} ${state.rooms===1?"camera":"camere"}`;
-  renderChildAges();
+function toast(message){
+  const el = $("#toast");
+  el.textContent = message;
+  el.classList.add("show");
+  clearTimeout(window.voytanaToast);
+  window.voytanaToast = setTimeout(() => el.classList.remove("show"), 2600);
 }
 
-function renderChildAges(){
-  while(state.childAges.length<state.children) state.childAges.push(6);
-  state.childAges=state.childAges.slice(0,state.children);
-  $("childrenAges").innerHTML=state.childAges.map((age,index)=>`
-    <label>
-      <span>Età bambino ${index+1}</span>
-      <select data-child-age="${index}">
-        ${Array.from({length:18},(_,i)=>`<option value="${i}" ${i===age?"selected":""}>${i} ${i===1?"anno":"anni"}</option>`).join("")}
-      </select>
-    </label>`).join("");
-  document.querySelectorAll("[data-child-age]").forEach(select=>{
-    select.addEventListener("change",()=>{state.childAges[Number(select.dataset.childAge)]=Number(select.value)});
+function setBudget(value){
+  range.value = value;
+  budgetValue.textContent = formatEuro(value);
+  $$(".budget-presets button").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.budget === String(value));
   });
 }
 
-function selectMode(mode){
-  state.mode=mode;
-  state.offset=0;
-  document.querySelectorAll(".choice-card").forEach(card=>{
-    const radio=card.querySelector("input");
-    card.classList.toggle("active",radio.value===mode);
+range.addEventListener("input", e => setBudget(e.target.value));
+$$(".budget-presets button").forEach(btn => btn.addEventListener("click", () => setBudget(btn.dataset.budget)));
+
+$$(".category").forEach(btn => {
+  btn.addEventListener("click", () => {
+    $$(".category").forEach(item => item.classList.remove("active"));
+    btn.classList.add("active");
+    currentCategory = btn.dataset.category;
+    surprise = currentCategory === "surprise";
+    $("#destination").value = "";
+    $("#mealPlanField").classList.toggle("hidden", currentCategory !== "family");
+    if(currentCategory === "weekend") $("#duration").value = "2";
+    toast(btn.textContent.trim() + " selezionato");
   });
-  $("familyOptions").hidden=mode!=="famiglia";
-  $("weekendOptions").hidden=mode!=="weekend";
-  $("resultsTitle").textContent=modeTitles[mode];
-  if(mode==="sorprendimi") $("destination").value="";
-  renderResults();
-}
+});
 
-function resultCard(item){
-  const budget=Number($("budget").value)||800;
-  const baseMode=state.mode==="famiglia"?1800:600;
-  const scale=Math.max(.72,Math.min(1.3,budget/baseMode));
-  const total=Math.max(150,Math.round(item.price*scale));
-  return `<article class="result-card">
-    <div class="result-image" style="background-image:url('${item.image}')">
-      <span class="result-tag">${item.tag}</span>
-      <button class="heart-button" type="button" aria-label="Salva ${item.name}">♡</button>
-    </div>
-    <div class="result-body">
-      <h3>${item.name}</h3>
-      <div class="result-meta">${item.place}</div>
-      <div class="rating-row"><span>Recensioni eccellenti</span><span class="rating">${item.rating}</span></div>
-      <div class="features">${item.features.map(f=>`<span>${f}</span>`).join("")}</div>
-      <div class="result-price-row">
-        <div><small>Totale indicativo</small><span class="price">€${total}</span></div>
-        <button class="book-button" type="button">Prenota</button>
-      </div>
-    </div>
-  </article>`;
-}
-
-function renderResults(){
-  const data=datasets[state.mode];
-  const items=[0,1,2].map(i=>data[(state.offset+i)%data.length]);
-  $("resultsGrid").innerHTML=items.map(resultCard).join("");
-  $("resultsSubtitle").textContent=`Esempi per ${state.adults} ${state.adults===1?"adulto":"adulti"}, ${state.children} ${state.children===1?"bambino":"bambini"} e ${state.rooms} ${state.rooms===1?"camera":"camere"}.`;
-  document.querySelectorAll(".heart-button").forEach(button=>{
-    button.addEventListener("click",()=>{button.textContent=button.textContent==="♡"?"♥":"♡"});
+$$(".mode-switch button").forEach(btn => {
+  btn.addEventListener("click", () => {
+    $$(".mode-switch button").forEach(item => item.classList.remove("active"));
+    btn.classList.add("active");
+    currentMode = btn.dataset.mode;
+    if(currentMode === "low"){
+      setBudget(700);
+      $("#duration").value = "2";
+    }
   });
-  document.querySelectorAll(".book-button").forEach(button=>{
-    button.addEventListener("click",()=>alert("Il pulsante Prenota è pronto per il link affiliato reale del partner."));
+});
+
+$("#surpriseButton").addEventListener("click", () => {
+  surprise = true;
+  currentCategory = "surprise";
+  $("#destination").value = "";
+  $$(".category").forEach(item => item.classList.toggle("active", item.dataset.category === "surprise"));
+  toast("Sorprendimi attivato: selezioneremo destinazioni diverse.");
+});
+
+$("#advancedToggle").addEventListener("click", () => {
+  const box = $("#advancedOptions");
+  box.classList.toggle("show");
+  $("#advancedToggle").textContent = box.classList.contains("show") ? "Nascondi preferenze ▴" : "Aggiungi preferenze ▾";
+});
+
+$$(".preference").forEach(btn => btn.addEventListener("click", () => btn.classList.toggle("active")));
+
+function getParams(){
+  return {
+    budget: Number(range.value),
+    departure: $("#departure").value,
+    nights: Number($("#duration").value),
+    travelers: Number($("#travelers").value),
+    destination: $("#destination").value.trim().toLowerCase(),
+    prefs: $$(".preference.active").map(btn => btn.dataset.pref),
+    mealPlan: $("#mealPlan").value
+  };
+}
+
+function calculateTrip(trip, params){
+  if(params.destination && !(`${trip.city} ${trip.country}`.toLowerCase().includes(params.destination))) return null;
+  if(!trip.from.includes(params.departure)) return null;
+
+  const effectiveCategory = currentCategory === "surprise" ? "package" : currentCategory;
+  if(!["package","weekend","family","hotel","flight","cruise","car"].includes(effectiveCategory)) return null;
+  if(["package","weekend","family","hotel"].includes(effectiveCategory) && !trip.type.includes(effectiveCategory) && !trip.type.includes("package")) return null;
+
+  const hotel = effectiveCategory === "flight" ? 0 : Math.round(trip.baseNight * params.nights * Math.max(1, params.travelers * .62));
+  const flight = effectiveCategory === "hotel" ? 0 : Math.round(trip.flight * params.travelers);
+  const mealSupplement = currentCategory === "family"
+    ? Math.round((params.mealPlan === "allinclusive" ? 38 : params.mealPlan === "half" ? 22 : 0) * params.travelers * params.nights)
+    : 0;
+  const fees = Math.round((hotel + flight + mealSupplement) * .075);
+  const total = hotel + flight + mealSupplement + fees;
+  if(total > params.budget) return null;
+
+  const matchingPrefs = params.prefs.filter(pref => trip.prefs.includes(pref)).length;
+  if(params.prefs.length && matchingPrefs === 0) return null;
+
+  const valueScore = Math.max(0, (params.budget - total) / params.budget);
+  let score = Math.round(64 + trip.rating * 4.7 + matchingPrefs * 4 + valueScore * 12);
+  if(currentMode === "low") score += total < params.budget * .72 ? 5 : 0;
+  score = Math.min(99, score);
+
+  return {
+    ...trip, hotel, flight, mealSupplement, fees, total,
+    residual: params.budget - total, score
+  };
+}
+
+function search(reset = true){
+  if(reset) resultOffset = 0;
+  const params = getParams();
+  evaluatedTrips = trips.map(trip => calculateTrip(trip, params)).filter(Boolean);
+
+  evaluatedTrips.sort((a,b) => {
+    if(currentMode === "low") return a.total - b.total;
+    return b.score - a.score || b.rating - a.rating;
   });
-}
 
-function validate(){
-  const error=$("formError");
-  error.textContent="";
-  if(Number($("budget").value)<100){error.textContent="Inserisci un budget minimo di €100.";return false}
-  if(!$("departure").value.trim()){error.textContent="Inserisci la città o l'aeroporto di partenza.";return false}
-  if(!$("startDate").value||!$("endDate").value){error.textContent="Seleziona le date del viaggio.";return false}
-  if(new Date($("endDate").value)<=new Date($("startDate").value)){error.textContent="La data di ritorno deve essere successiva alla partenza.";return false}
-  if(state.children>0 && state.childAges.length!==state.children){error.textContent="Indica l'età di tutti i bambini.";return false}
-  return true;
-}
-
-$("travelForm").addEventListener("submit",async event=>{
-  event.preventDefault();
-  if(!validate()) return;
-  const box=$("loadingBox");
-  const text=$("loadingText");
-  box.hidden=false;
-  const messages=[
-    "Controllo budget, date e ospiti...",
-    "Confronto qualità, prezzo e durata...",
-    "Seleziono le tre proposte più coerenti..."
-  ];
-  for(const message of messages){
-    text.textContent=message;
-    await new Promise(resolve=>setTimeout(resolve,600));
+  if(surprise){
+    const countries = new Set();
+    evaluatedTrips = evaluatedTrips.filter(item => {
+      if(countries.has(item.country)) return false;
+      countries.add(item.country);
+      return true;
+    }).concat(evaluatedTrips.filter(item => countries.has(item.country)));
   }
-  state.offset=0;
-  renderResults();
-  box.hidden=true;
-  $("results").scrollIntoView({behavior:"smooth"});
-});
 
-document.querySelectorAll('input[name="travelMode"]').forEach(radio=>{
-  radio.addEventListener("change",()=>selectMode(radio.value));
-});
-
-$("guestsButton").addEventListener("click",()=>$("guestsPopover").classList.toggle("open"));
-$("closeGuests").addEventListener("click",()=>$("guestsPopover").classList.remove("open"));
-document.querySelectorAll("[data-step]").forEach(button=>{
-  button.addEventListener("click",()=>{
-    const key=button.dataset.step;
-    const direction=Number(button.dataset.direction);
-    if(key==="adults") state.adults=Math.max(1,Math.min(12,state.adults+direction));
-    if(key==="children") state.children=Math.max(0,Math.min(8,state.children+direction));
-    if(key==="rooms") state.rooms=Math.max(1,Math.min(8,state.rooms+direction));
-    updateGuests();
-    renderResults();
-  });
-});
-
-document.addEventListener("click",event=>{
-  if(!$("guestsPopover").contains(event.target)&&!$("guestsButton").contains(event.target)){
-    $("guestsPopover").classList.remove("open");
-  }
-});
-
-$("moreButton").addEventListener("click",()=>{
-  state.offset=(state.offset+3)%datasets[state.mode].length;
-  renderResults();
-});
-
-$("menuButton").addEventListener("click",()=>$("mobileMenu").classList.toggle("open"));
-
-const slides=[...document.querySelectorAll(".hero-slide")];
-const dots=[...document.querySelectorAll(".slider-dot")];
-
-function showSlide(index){
-  state.slide=index;
-  slides.forEach((slide,i)=>slide.classList.toggle("active",i===index));
-  dots.forEach((dot,i)=>dot.classList.toggle("active",i===index));
+  renderResults(params);
 }
 
-dots.forEach((dot,index)=>dot.addEventListener("click",()=>showSlide(index)));
-setInterval(()=>showSlide((state.slide+1)%slides.length),5500);
+function renderResults(params){
+  const grid = $("#resultsGrid");
+  const empty = $("#emptyState");
+  const summary = $("#resultSummary");
+  grid.innerHTML = "";
 
-updateGuests();
-selectMode("soggiorno");
+  const visible = evaluatedTrips.slice(resultOffset, resultOffset + 3);
+  if(!visible.length){
+    empty.classList.add("show");
+    summary.classList.remove("show");
+    return;
+  }
+
+  empty.classList.remove("show");
+  summary.classList.add("show");
+  summary.innerHTML = `<strong>${params.travelers} viaggiatori · ${params.nights} ${params.nights === 1 ? "notte" : "notti"} · partenza ${params.departure} · budget €${formatEuro(params.budget)}</strong><span>${evaluatedTrips.length} proposte compatibili trovate</span>`;
+
+  visible.forEach((trip,index) => {
+    const familyTreatment = currentCategory === "family" && params.mealPlan !== "all"
+      ? `<span>🍽 ${params.mealPlan === "allinclusive" ? "All inclusive" : "Mezza pensione"}</span>` : "";
+
+    grid.insertAdjacentHTML("beforeend", `
+      <article class="trip-card ${index === 0 ? "best" : ""}">
+        ${index === 0 ? '<div class="best-badge">SCELTA VOYTANA</div>' : ""}
+        <div class="trip-image" style="background-image:url('${trip.img}')">
+          <span class="match-badge">${trip.score}% compatibile</span>
+        </div>
+        <div class="trip-body">
+          <span class="trip-country">${trip.country}</span>
+          <div class="title-row"><h3>${trip.city}</h3><span class="rating">${trip.rating} ★</span></div>
+          <p class="trip-description">${trip.description}</p>
+          <div class="why">Selezionata perché rispetta il budget e offre un buon equilibrio tra prezzo, qualità, recensioni e durata.</div>
+          <div class="trip-tags">
+            ${trip.flight ? "<span>✈ Volo incluso</span>" : ""}
+            ${trip.hotel ? `<span>🏨 ${params.nights} ${params.nights === 1 ? "notte" : "notti"}</span>` : ""}
+            <span>⭐ ${trip.stars} stelle</span>
+            <span>👥 ${params.travelers} persone</span>
+            ${familyTreatment}
+          </div>
+          <div class="cost-breakdown">
+            <div><small>Volo</small><strong>€${formatEuro(trip.flight)}</strong></div>
+            <div><small>Alloggio</small><strong>€${formatEuro(trip.hotel)}</strong></div>
+            <div><small>Costi stimati</small><strong>€${formatEuro(trip.fees + trip.mealSupplement)}</strong></div>
+          </div>
+          <div class="price-row">
+            <div><small>Totale stimato</small><div class="total-price">€${formatEuro(trip.total)}</div><div class="residual">Restano €${formatEuro(trip.residual)}</div></div>
+            <button class="book-button" type="button" onclick="window.showAffiliateMessage()">Vedi e prenota</button>
+          </div>
+        </div>
+      </article>
+    `);
+  });
+
+  $("#proposte").scrollIntoView({behavior:"smooth"});
+}
+
+window.showAffiliateMessage = () => toast("Il pulsante sarà collegato al partner affiliato approvato.");
+
+$("#searchButton").addEventListener("click", () => {
+  const btn = $("#searchButton");
+  btn.disabled = true;
+  btn.querySelector("span").textContent = "Sto selezionando le proposte…";
+  setTimeout(() => {
+    search(true);
+    btn.disabled = false;
+    btn.querySelector("span").textContent = "Trova le mie 3 migliori proposte";
+  }, 650);
+});
+
+$("#moreButton").addEventListener("click", () => {
+  if(!evaluatedTrips.length) return search(true);
+  resultOffset += 3;
+  if(resultOffset >= evaluatedTrips.length){
+    resultOffset = 0;
+    toast("Hai visto tutte le proposte compatibili: ripartiamo dalle migliori.");
+  }
+  renderResults(getParams());
+});
+
+$("#waitlistForm").addEventListener("submit", e => {
+  e.preventDefault();
+  $("#formSuccess").classList.add("show");
+  e.currentTarget.reset();
+});
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add("visible");
+      observer.unobserve(entry.target);
+    }
+  });
+},{threshold:.12});
+$$(".reveal").forEach(el => observer.observe(el));
+
+window.addEventListener("scroll", () => {
+  const total = document.documentElement.scrollHeight - innerHeight;
+  $("#scrollProgress").style.width = `${Math.min(100, (scrollY / Math.max(1,total)) * 100)}%`;
+});
+
+const defaultDate = new Date();
+defaultDate.setDate(defaultDate.getDate() + 30);
+$("#dateFrom").value = defaultDate.toISOString().slice(0,10);
+
+search(true);

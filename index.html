@@ -2,368 +2,288 @@
 <html lang="it">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#063f46">
-  <meta name="description" content="Voytana: inserisci il budget, scegli il tipo di viaggio e ricevi tre proposte alla volta.">
-  <title>Voytana — Scegli il budget. Al viaggio pensiamo noi.</title>
-
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#071c2a">
+  <meta name="description" content="Voytana trasforma il tuo budget in tre proposte di viaggio curate, chiare e confrontabili.">
+  <meta property="og:title" content="Voytana — Scegli il tuo budget. Al viaggio pensiamo noi.">
+  <meta property="og:description" content="Tre proposte alla volta. Zero confusione.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://voytana.com">
+  <title>Voytana — Viaggi. Pensati per te.</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://images.unsplash.com">
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="stili.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header class="site-header">
-    <div class="container header-inner">
-      <a class="brand" href="#top" aria-label="Voytana home">
-        <span class="brand-mark">V</span>
-        <span>Voytana</span>
+  <div class="scroll-progress" id="scrollProgress"></div>
+
+  <header class="site-header" id="top">
+    <div class="shell nav">
+      <a class="brand" href="#top" aria-label="Voytana, torna all'inizio">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 64 64" role="img">
+            <defs>
+              <linearGradient id="voytanaGradient" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#7ff3e5"/>
+                <stop offset=".55" stop-color="#20b7b0"/>
+                <stop offset="1" stop-color="#0b6f82"/>
+              </linearGradient>
+            </defs>
+            <circle cx="45" cy="14" r="7" fill="#ffd166"/>
+            <path d="M8 12h13l11 27 12-27h12L37 53c-2 4-8 4-10 0Z" fill="url(#voytanaGradient)"/>
+            <path d="M9 39c10-7 20-6 31-1 6 3 11 2 16-2-5 10-15 14-24 10-9-4-15-5-23 0Z" fill="#fff"/>
+          </svg>
+        </span>
+        <span class="brand-copy">
+          <strong>VOYTANA</strong>
+          <small>VIAGGI. PENSATI PER TE.</small>
+        </span>
       </a>
 
-      <nav class="header-links" aria-label="Navigazione principale">
-        <a href="#search">Cerca</a>
-        <a href="#how">Come funziona</a>
-        <a href="#benefits">Perché Voytana</a>
+      <nav class="desktop-links" aria-label="Navigazione principale">
+        <a href="#come-funziona">Come funziona</a>
+        <a href="#proposte">Le proposte</a>
+        <a href="#fiducia">Perché Voytana</a>
       </nav>
 
-      <div class="header-actions">
-        <button class="ghost-button" type="button" aria-label="Lingua italiana">IT</button>
-        <button class="ghost-button" type="button" aria-label="Preferiti">♡</button>
-        <button class="account-button" type="button">Accedi</button>
-        <button id="menuButton" class="menu-button" type="button" aria-label="Apri menu">☰</button>
+      <div class="nav-actions">
+        <select aria-label="Lingua">
+          <option>IT</option>
+          <option>EN</option>
+          <option>ES</option>
+          <option>FR</option>
+          <option>DE</option>
+        </select>
+        <a class="nav-cta" href="#searchCard">Inizia la ricerca</a>
       </div>
     </div>
 
-    <nav id="mobileMenu" class="mobile-menu" aria-label="Menu mobile">
-      <a href="#search">Cerca</a>
-      <a href="#how">Come funziona</a>
-      <a href="#benefits">Perché Voytana</a>
-    </nav>
+    <div class="shell category-nav" aria-label="Categorie di viaggio">
+      <button class="category active" data-category="package">✈️ Volo + hotel</button>
+      <button class="category" data-category="flight">🛫 Voli</button>
+      <button class="category" data-category="hotel">🏨 Hotel</button>
+      <button class="category" data-category="weekend">🌆 Weekend</button>
+      <button class="category" data-category="family">👨‍👩‍👧 Villaggi Famiglia</button>
+      <button class="category" data-category="cruise">🚢 Crociere</button>
+      <button class="category" data-category="car">🚗 Noleggio auto</button>
+      <button class="category surprise-tab" data-category="surprise">✨ Sorprendimi</button>
+    </div>
   </header>
 
-  <main id="top">
-    <section class="hero" aria-label="Presentazione Voytana">
-      <div class="hero-slide slide-one active"></div>
-      <div class="hero-slide slide-two"></div>
-      <div class="hero-slide slide-three"></div>
+  <main>
+    <section class="hero">
+      <video class="hero-video" autoplay muted loop playsinline preload="metadata" poster="">
+        <source src="assets/hero-voytana.mp4" type="video/mp4">
+      </video>
       <div class="hero-overlay"></div>
+      <div class="hero-glow"></div>
 
-      <div class="container hero-content">
-        <span class="eyebrow light">IL VIAGGIO PARTE DAL TUO BUDGET</span>
-        <h1>Scegli quanto spendere.<br><em>Voytana trova dove partire.</em></h1>
-        <p>Inserisci una sola volta il tuo budget, seleziona ciò che desideri e ricevi tre proposte chiare alla volta.</p>
-
-        <div class="hero-points">
-          <span>✓ Budget totale</span>
-          <span>✓ Solo 3 proposte</span>
-          <span>✓ Nessuna confusione</span>
+      <div class="shell hero-content">
+        <div class="hero-copy">
+          <span class="eyebrow"><i></i> IL VIAGGIO PARTE DAL TUO BUDGET</span>
+          <h1>Scegli quanto spendere.<br><em>Al viaggio pensiamo noi.</em></h1>
+          <p>Inserisci pochi dati e ricevi tre proposte curate, con prezzo totale chiaro. Se non ti convincono, chiedine altre tre.</p>
+          <div class="hero-proof">
+            <span>✓ Budget rispettato</span>
+            <span>✓ Solo 3 proposte alla volta</span>
+            <span>✓ Prezzi trasparenti</span>
+          </div>
         </div>
 
-        <div class="slider-dots" aria-label="Sfondo in evidenza">
-          <button class="slider-dot active" type="button" data-slide="0" aria-label="Mare"></button>
-          <button class="slider-dot" type="button" data-slide="1" aria-label="Città"></button>
-          <button class="slider-dot" type="button" data-slide="2" aria-label="Montagna"></button>
-        </div>
-      </div>
-    </section>
-
-    <section id="search" class="search-section">
-      <div class="container">
-        <div class="search-card">
-          <div class="search-intro">
+        <section class="search-card" id="searchCard" aria-label="Motore di ricerca Voytana">
+          <div class="search-topline">
             <div>
-              <span class="eyebrow">MOTORE VOYTANA</span>
-              <h2>Trova le 3 migliori soluzioni per te</h2>
+              <span class="mini-label">RICERCA VOYTANA</span>
+              <h2>Trova il viaggio giusto per te</h2>
             </div>
-            <span class="unique-badge">Budget-first</span>
+            <button class="surprise-button" id="surpriseButton" type="button">✨ Sorprendimi</button>
           </div>
 
-          <form id="travelForm" novalidate>
-            <div class="main-search-grid">
-              <label class="search-field budget-field">
-                <span>Budget totale</span>
-                <div class="field-content">
-                  <b>€</b>
-                  <input id="budget" type="number" min="100" step="50" value="800" inputmode="numeric">
-                </div>
-                <small>Per tutto il viaggio</small>
-              </label>
+          <div class="mode-switch" aria-label="Tipo di ricerca">
+            <button class="active" data-mode="smart" type="button">Ricerca intelligente</button>
+            <button data-mode="low" type="button">Low cost</button>
+          </div>
 
-              <label class="search-field">
-                <span>Da dove parti?</span>
-                <div class="field-content">
-                  <b>↗</b>
-                  <input id="departure" type="text" value="Napoli" placeholder="Città o aeroporto">
-                </div>
-              </label>
-
-              <label class="search-field">
-                <span>Destinazione</span>
-                <div class="field-content">
-                  <b>⌖</b>
-                  <input id="destination" type="text" placeholder="Ovunque">
-                </div>
-              </label>
-
-              <label class="search-field">
-                <span>Andata</span>
-                <div class="field-content">
-                  <b>▣</b>
-                  <input id="startDate" type="date">
-                </div>
-              </label>
-
-              <label class="search-field">
-                <span>Ritorno</span>
-                <div class="field-content">
-                  <b>▣</b>
-                  <input id="endDate" type="date">
-                </div>
-              </label>
-
-              <div class="search-field guests-field">
-                <span>Ospiti</span>
-                <button id="guestsButton" class="guests-button" type="button">
-                  <b>♙</b>
-                  <span id="guestsSummary">2 adulti · 0 bambini · 1 camera</span>
-                </button>
-
-                <div id="guestsPopover" class="guests-popover">
-                  <div class="guest-row">
-                    <div><strong>Adulti</strong><small>18 anni o più</small></div>
-                    <div class="stepper">
-                      <button type="button" data-step="adults" data-direction="-1">−</button>
-                      <span id="adultsCount">2</span>
-                      <button type="button" data-step="adults" data-direction="1">+</button>
-                    </div>
-                  </div>
-
-                  <div class="guest-row">
-                    <div><strong>Bambini</strong><small>Da 0 a 17 anni</small></div>
-                    <div class="stepper">
-                      <button type="button" data-step="children" data-direction="-1">−</button>
-                      <span id="childrenCount">0</span>
-                      <button type="button" data-step="children" data-direction="1">+</button>
-                    </div>
-                  </div>
-
-                  <div id="childrenAges" class="children-ages"></div>
-
-                  <div class="guest-row">
-                    <div><strong>Camere</strong><small>Numero di camere</small></div>
-                    <div class="stepper">
-                      <button type="button" data-step="rooms" data-direction="-1">−</button>
-                      <span id="roomsCount">1</span>
-                      <button type="button" data-step="rooms" data-direction="1">+</button>
-                    </div>
-                  </div>
-
-                  <button id="closeGuests" class="done-button" type="button">Fatto</button>
-                </div>
-              </div>
+          <div class="budget-panel">
+            <div class="budget-heading">
+              <label for="budgetRange">Il tuo budget totale</label>
+              <strong>€<span id="budgetValue">1.500</span></strong>
             </div>
-
-            <div class="preference-block">
-              <div class="preference-heading">
-                <div>
-                  <strong>Cosa stai cercando?</strong>
-                  <span>Scegli una sola opzione principale</span>
-                </div>
-              </div>
-
-              <div class="preference-grid" role="radiogroup" aria-label="Tipo di viaggio">
-                <label class="choice-card active">
-                  <input type="radio" name="travelMode" value="soggiorno" checked>
-                  <span class="choice-icon">⌂</span>
-                  <span><strong>Soggiorno</strong><small>Hotel o appartamento</small></span>
-                </label>
-
-                <label class="choice-card">
-                  <input type="radio" name="travelMode" value="volo">
-                  <span class="choice-icon">✈</span>
-                  <span><strong>Volo</strong><small>Solo andata e ritorno</small></span>
-                </label>
-
-                <label class="choice-card">
-                  <input type="radio" name="travelMode" value="pacchetto">
-                  <span class="choice-icon">✦</span>
-                  <span><strong>Volo + Hotel</strong><small>Pacchetto completo</small></span>
-                </label>
-
-                <label class="choice-card">
-                  <input type="radio" name="travelMode" value="weekend">
-                  <span class="choice-icon">☀</span>
-                  <span><strong>Weekend</strong><small>1, 2 o 3 notti</small></span>
-                </label>
-
-                <label class="choice-card">
-                  <input type="radio" name="travelMode" value="lowcost">
-                  <span class="choice-icon">€</span>
-                  <span><strong>Low Cost</strong><small>Massimo valore</small></span>
-                </label>
-
-                <label class="choice-card">
-                  <input type="radio" name="travelMode" value="famiglia">
-                  <span class="choice-icon">♙</span>
-                  <span><strong>Villaggi Famiglia</strong><small>Vacanze per grandi e piccoli</small></span>
-                </label>
-
-                <label class="choice-card">
-                  <input type="radio" name="travelMode" value="sorprendimi">
-                  <span class="choice-icon">✧</span>
-                  <span><strong>Sorprendimi</strong><small>La destinazione la scegliamo noi</small></span>
-                </label>
-
-                <label class="choice-card">
-                  <input type="radio" name="travelMode" value="business">
-                  <span class="choice-icon">▦</span>
-                  <span><strong>Business</strong><small>Semplice e veloce</small></span>
-                </label>
-              </div>
+            <input id="budgetRange" type="range" min="250" max="5000" step="50" value="1500">
+            <div class="budget-presets">
+              <button data-budget="500" type="button">€500</button>
+              <button data-budget="1000" type="button">€1.000</button>
+              <button class="active" data-budget="1500" type="button">€1.500</button>
+              <button data-budget="2500" type="button">€2.500</button>
             </div>
+          </div>
 
-            <div id="familyOptions" class="conditional-options" hidden>
-              <div>
-                <strong>Trattamento Villaggi Famiglia</strong>
-                <span>Scegli il trattamento preferito</span>
-              </div>
-              <label><input type="radio" name="familyBoard" value="all-inclusive" checked> All Inclusive</label>
-              <label><input type="radio" name="familyBoard" value="mezza-pensione"> Mezza pensione</label>
-            </div>
+          <div class="search-grid">
+            <label>
+              <span>Partenza</span>
+              <select id="departure">
+                <option value="NAP">Napoli</option>
+                <option value="ROM">Roma</option>
+                <option value="MIL">Milano</option>
+                <option value="BLQ">Bologna</option>
+                <option value="VCE">Venezia</option>
+                <option value="TRN">Torino</option>
+                <option value="BRI">Bari</option>
+              </select>
+            </label>
 
-            <div id="weekendOptions" class="conditional-options" hidden>
-              <div>
-                <strong>Durata weekend</strong>
-                <span>Scegli quanto vuoi fermarti</span>
-              </div>
-              <label><input type="radio" name="weekendNights" value="1"> 1 notte</label>
-              <label><input type="radio" name="weekendNights" value="2" checked> 2 notti</label>
-              <label><input type="radio" name="weekendNights" value="3"> 3 notti</label>
-            </div>
+            <label>
+              <span>Quando vuoi partire?</span>
+              <input id="dateFrom" type="date">
+            </label>
 
-            <div class="form-bottom">
-              <label class="flexible-check"><input id="flexibleDates" type="checkbox" checked> Date flessibili ± 3 giorni</label>
-              <button class="primary-button" type="submit">
-                <span>Trova le 3 migliori soluzioni</span>
-                <b>→</b>
-              </button>
-            </div>
+            <label>
+              <span>Durata</span>
+              <select id="duration">
+                <option value="1">1 notte</option>
+                <option value="2" selected>2 notti</option>
+                <option value="3">3 notti</option>
+                <option value="5">5 notti</option>
+                <option value="7">7 notti</option>
+                <option value="10">10 notti</option>
+                <option value="14">14 notti</option>
+              </select>
+            </label>
 
-            <p id="formError" class="form-error" role="alert"></p>
-          </form>
+            <label>
+              <span>Viaggiatori</span>
+              <select id="travelers">
+                <option value="1">1 persona</option>
+                <option value="2" selected>2 persone</option>
+                <option value="3">3 persone</option>
+                <option value="4">4 persone</option>
+                <option value="5">5 persone</option>
+                <option value="6">6 persone</option>
+              </select>
+            </label>
+
+            <label class="destination-field">
+              <span>Destinazione</span>
+              <input id="destination" type="text" placeholder="Scrivi una città o lascia vuoto">
+            </label>
+
+            <label id="mealPlanField" class="meal-field hidden">
+              <span>Trattamento</span>
+              <select id="mealPlan">
+                <option value="all">Qualsiasi</option>
+                <option value="half">Mezza pensione</option>
+                <option value="allinclusive">All inclusive</option>
+              </select>
+            </label>
+          </div>
+
+          <button class="advanced-toggle" id="advancedToggle" type="button">Aggiungi preferenze ▾</button>
+          <div class="advanced-options" id="advancedOptions">
+            <button class="preference" data-pref="sea" type="button">🌊 Mare</button>
+            <button class="preference" data-pref="city" type="button">🏙 Città</button>
+            <button class="preference" data-pref="mountain" type="button">🏔 Montagna</button>
+            <button class="preference" data-pref="direct" type="button">✈ Volo diretto</button>
+            <button class="preference" data-pref="breakfast" type="button">☕ Colazione</button>
+            <button class="preference" data-pref="family" type="button">👨‍👩‍👧 Famiglia</button>
+          </div>
+
+          <button class="primary-search" id="searchButton" type="button">
+            <span>Trova le mie 3 migliori proposte</span>
+            <b>→</b>
+          </button>
+          <p class="search-note">Voytana mostra soltanto proposte compatibili con il budget indicato.</p>
+        </section>
+      </div>
+
+      <a class="scroll-cue" href="#come-funziona" aria-label="Scopri di più"><span></span>Scopri Voytana</a>
+    </section>
+
+    <section class="section how" id="come-funziona">
+      <div class="shell">
+        <div class="section-heading center reveal">
+          <span>SEMPLICE PER DAVVERO</span>
+          <h2>Dal budget alla partenza in tre passaggi.</h2>
+          <p>Niente infinite pagine di risultati. Voytana riduce la confusione e porta subito alle opzioni più sensate.</p>
+        </div>
+        <div class="steps">
+          <article class="reveal"><b>01</b><span>€</span><h3>Inserisci il budget</h3><p>Il prezzo massimo guida l'intera ricerca.</p></article>
+          <article class="reveal"><b>02</b><span>◎</span><h3>Ricevi tre proposte</h3><p>Tre alternative diverse, ordinate e confrontabili.</p></article>
+          <article class="reveal"><b>03</b><span>↻</span><h3>Scegli o continua</h3><p>Non ti convincono? Chiedi altre tre soluzioni.</p></article>
         </div>
       </div>
     </section>
 
-    <section id="results" class="results-section">
-      <div class="container">
-        <div class="section-heading">
+    <section class="section results-section" id="proposte">
+      <div class="shell">
+        <div class="section-heading results-heading reveal">
           <div>
-            <span class="eyebrow">SELEZIONATE PER TE</span>
-            <h2 id="resultsTitle">Tre soggiorni facili da confrontare</h2>
-            <p id="resultsSubtitle">Esempi dimostrativi basati sui dati inseriti.</p>
+            <span>SELEZIONE PERSONALIZZATA</span>
+            <h2>Le tue tre proposte Voytana.</h2>
           </div>
-          <span class="three-badge">3 proposte alla volta</span>
+          <button id="moreButton" class="more-button" type="button">Mostrami altre 3 ↻</button>
         </div>
-
-        <div id="loadingBox" class="loading-box" hidden>
-          <div class="spinner"></div>
-          <div>
-            <strong>Voytana sta preparando le tue proposte</strong>
-            <p id="loadingText">Controllo budget, date e preferenze...</p>
-          </div>
-        </div>
-
-        <div id="resultsGrid" class="results-grid"></div>
-
-        <div class="more-wrap">
-          <button id="moreButton" class="secondary-button" type="button">Mostrami altre 3</button>
-        </div>
-
-        <p class="demo-disclaimer">Questi risultati sono dimostrativi. Prezzi, disponibilità e prenotazioni reali richiedono il collegamento ai partner affiliati.</p>
-      </div>
-    </section>
-
-    <section id="how" class="how-section">
-      <div class="container">
-        <div class="section-heading centered">
-          <div>
-            <span class="eyebrow">COME FUNZIONA</span>
-            <h2>Tre passaggi. Nessuna perdita di tempo.</h2>
-          </div>
-        </div>
-
-        <div class="steps-grid">
-          <article><span>01</span><h3>Inserisci il budget</h3><p>Lo scrivi una sola volta, all'inizio.</p></article>
-          <article><span>02</span><h3>Scegli ciò che desideri</h3><p>Weekend, low cost, villaggi famiglia o altro.</p></article>
-          <article><span>03</span><h3>Ricevi tre proposte</h3><p>Le confronti, prenoti oppure chiedi altre tre.</p></article>
+        <div class="result-summary" id="resultSummary"></div>
+        <div class="results-grid" id="resultsGrid"></div>
+        <div class="empty-state" id="emptyState">
+          <h3>Nessuna proposta rispetta tutti i parametri.</h3>
+          <p>Aumenta il budget, cambia la durata o rimuovi una preferenza. Voytana non mostra soluzioni oltre il tuo limite.</p>
         </div>
       </div>
     </section>
 
-    <section id="benefits" class="benefits-section">
-      <div class="container benefits-layout">
+    <section class="section trust-section" id="fiducia">
+      <div class="shell">
+        <div class="section-heading center reveal">
+          <span>PIÙ CHIAREZZA, MENO STRESS</span>
+          <h2>Un nuovo modo di scegliere un viaggio.</h2>
+        </div>
+        <div class="trust-grid">
+          <article class="reveal"><span>③</span><h3>Tre alla volta</h3><p>Abbastanza scelta per confrontare, senza sommergerti.</p></article>
+          <article class="reveal"><span>🎯</span><h3>Budget-first</h3><p>Prima stabilisci quanto vuoi spendere, poi cerchiamo.</p></article>
+          <article class="reveal"><span>🛡</span><h3>Trasparenza</h3><p>Totale stimato, inclusioni e budget residuo sempre visibili.</p></article>
+          <article class="reveal"><span>📱</span><h3>Mobile-first</h3><p>Progettata per essere semplice anche da smartphone.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section waitlist" id="waitlist">
+      <div class="shell waitlist-card reveal">
         <div>
-          <span class="eyebrow light">PERCHÉ VOYTANA</span>
-          <h2>Semplice come ti aspetti. Diversa dove conta.</h2>
-          <p>Voytana riduce la confusione: parte dal tuo budget e trasforma una ricerca infinita in tre proposte comprensibili.</p>
+          <span>ACCESSO FONDATORI</span>
+          <h2>Il futuro dei viaggi parte dal tuo budget.</h2>
+          <p>Entra tra i primi utenti Voytana e ricevi aggiornamenti, accesso anticipato e vantaggi riservati.</p>
         </div>
-
-        <div class="benefits-card">
-          <div><span>✓</span><p><strong>Budget-first</strong><small>Il budget guida tutta la ricerca.</small></p></div>
-          <div><span>✓</span><p><strong>Famiglie considerate davvero</strong><small>Adulti, bambini, età e camere.</small></p></div>
-          <div><span>✓</span><p><strong>Scelta controllata</strong><small>Tre risultati, poi altre tre quando vuoi.</small></p></div>
-        </div>
+        <form id="waitlistForm">
+          <input id="emailInput" type="email" placeholder="La tua email migliore" required>
+          <button type="submit">Entra nella waitlist</button>
+          <small>Zero spam. Solo aggiornamenti importanti.</small>
+          <div class="form-success" id="formSuccess">Perfetto. Sei nella lista Voytana.</div>
+        </form>
       </div>
     </section>
   </main>
 
-  <nav class="mobile-bottom" aria-label="Navigazione mobile">
-    <a class="active" href="#search"><span>⌕</span>Cerca</a>
-    <a href="#results"><span>✦</span>Proposte</a>
-    <a href="#how"><span>?</span>Come funziona</a>
-    <a href="#top"><span>○</span>Account</a>
-  </nav>
-
   <footer>
-    <div class="container footer-grid">
+    <div class="shell footer-grid">
       <div>
         <a class="brand footer-brand" href="#top">
-          <span class="brand-mark">V</span>
-          <span>Voytana</span>
+          <span class="brand-mark">
+            <svg viewBox="0 0 64 64"><circle cx="45" cy="14" r="7" fill="#ffd166"/><path d="M8 12h13l11 27 12-27h12L37 53c-2 4-8 4-10 0Z" fill="#20b7b0"/><path d="M9 39c10-7 20-6 31-1 6 3 11 2 16-2-5 10-15 14-24 10-9-4-15-5-23 0Z" fill="#fff"/></svg>
+          </span>
+          <span class="brand-copy"><strong>VOYTANA</strong><small>VIAGGI. PENSATI PER TE.</small></span>
         </a>
         <p>Scegli il tuo budget. Al viaggio pensiamo noi.</p>
       </div>
-
-      <div>
-        <strong>Voytana</strong>
-        <a href="#how">Come funziona</a>
-        <a href="#benefits">Perché Voytana</a>
-        <a href="#">Contatti</a>
-      </div>
-
-      <div>
-        <strong>Supporto</strong>
-        <a href="#">Assistenza</a>
-        <a href="#">Privacy</a>
-        <a href="#">Cookie</a>
-      </div>
-
-      <div>
-        <strong>Social</strong>
-        <a href="#">Instagram</a>
-        <a href="#">TikTok</a>
-        <a href="#">Facebook</a>
-      </div>
+      <div class="footer-col"><strong>Prodotto</strong><a href="#searchCard">Ricerca</a><a href="#proposte">Proposte</a><a href="#come-funziona">Come funziona</a></div>
+      <div class="footer-col"><strong>Voytana</strong><a href="#fiducia">Perché Voytana</a><a href="mailto:hello@voytana.com">Contatti</a><a href="#waitlist">Waitlist</a></div>
+      <div class="footer-col"><strong>Legale</strong><a href="#">Privacy</a><a href="#">Cookie</a><a href="#">Termini</a></div>
     </div>
-
-    <div class="container footer-bottom">
-      <span>© 2026 Voytana</span>
-      <span>Le prenotazioni saranno completate sui siti dei partner.</span>
-    </div>
+    <div class="shell footer-bottom"><span>© 2026 Voytana. Tutti i diritti riservati.</span><span>voytana.com</span></div>
   </footer>
 
+  <div class="toast" id="toast"></div>
   <script src="script.js"></script>
 </body>
 </html>
