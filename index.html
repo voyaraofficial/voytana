@@ -52,6 +52,34 @@ button,input,select{font:inherit}button{cursor:pointer}
 .lowcost{background:#fff}.low-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.low-card{border:1px solid var(--line);border-radius:20px;padding:24px;box-shadow:0 12px 30px rgba(6,51,61,.07)}.low-card h3{font-size:23px;margin:12px 0 8px}.low-card p{color:var(--muted);min-height:52px}.low-card button{border:0;border-radius:12px;background:var(--teal);color:#fff;font-weight:950;padding:12px 15px}
 footer{background:#052f39;color:#fff;padding:42px 5vw;display:grid;grid-template-columns:2fr repeat(3,1fr);gap:28px}footer h4{margin:0 0 14px}footer a{display:block;color:rgba(255,255,255,.75);text-decoration:none;margin:9px 0}
 .notice{display:none;background:#fff7d7;color:#6b5410;border:1px solid #efdc8f;padding:12px 16px;border-radius:12px;margin:16px 0}
+
+.utility{display:flex;gap:14px;align-items:center;font-weight:750;font-size:14px}
+.utility-btn{border:0;background:transparent;color:#fff;padding:9px 11px;border-radius:10px;font-weight:800}
+.utility-btn:hover{background:rgba(255,255,255,.14)}
+.utility-wrap{position:relative}
+.language-menu{display:none;position:absolute;right:0;top:calc(100% + 8px);width:170px;background:#fff;color:var(--ink);border-radius:13px;padding:8px;box-shadow:var(--shadow);z-index:100}
+.language-menu.open{display:block}
+.language-menu button{display:block;width:100%;border:0;background:#fff;color:var(--ink);text-align:left;padding:10px 12px;border-radius:9px;font-weight:800}
+.language-menu button:hover{background:#edf7f5;color:var(--teal)}
+.saved-count{display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;padding:0 5px;border-radius:999px;background:var(--teal2);color:#073f4a;font-size:11px;margin-left:3px}
+.modal-backdrop{display:none;position:fixed;inset:0;background:rgba(2,25,32,.68);z-index:9998;padding:20px;align-items:center;justify-content:center}
+.modal-backdrop.open{display:flex}
+.modal{width:min(560px,100%);max-height:88vh;overflow:auto;background:#fff;color:var(--ink);border-radius:20px;box-shadow:0 28px 80px rgba(0,0,0,.35);padding:24px;position:relative}
+.modal h2{margin:0 0 8px;font-size:30px;letter-spacing:-1px}
+.modal p{color:var(--muted);line-height:1.55}
+.modal-close{position:absolute;top:14px;right:14px;width:36px;height:36px;border-radius:50%;border:0;background:#edf3f3;color:var(--ink);font-size:20px}
+.login-form label{display:block;font-size:12px;font-weight:900;margin-top:13px;color:var(--muted);text-transform:uppercase}
+.login-form input{width:100%;padding:12px 13px;border:1px solid var(--line);border-radius:10px;margin-top:6px}
+.login-submit{width:100%;margin-top:18px;border:0;border-radius:11px;background:var(--teal);color:#fff;padding:13px;font-weight:950}
+.saved-list{display:grid;gap:12px;margin-top:18px}
+.saved-item{display:grid;grid-template-columns:92px 1fr auto;gap:13px;align-items:center;border:1px solid var(--line);border-radius:14px;padding:10px}
+.saved-item img{width:92px;height:70px;object-fit:cover;border-radius:10px}
+.saved-item h3{font-size:17px;margin:0 0 3px}.saved-item small{color:var(--muted)}
+.remove-saved{border:0;background:#fff0f0;color:#a83232;border-radius:9px;padding:9px;font-weight:900}
+.empty-saved{padding:28px;text-align:center;background:#f4f8f7;border-radius:14px;color:var(--muted)}
+.save-trip{position:absolute;top:14px;right:14px;width:38px;height:38px;border-radius:50%;border:0;background:rgba(255,255,255,.92);color:#073f4a;font-size:21px;z-index:2;box-shadow:0 5px 18px rgba(0,0,0,.16)}
+.save-trip.saved{background:#08a78f;color:#fff}
+
 @media(max-width:1080px){.search-shell{grid-template-columns:repeat(2,1fr)}.search-btn{min-height:60px}.cards,.low-grid{grid-template-columns:1fr 1fr}.strengths{grid-template-columns:1fr 1fr}}
 @media(max-width:720px){.utility{display:none}.topbar{padding:17px 20px}.nav{padding-left:12px}.hero-inner{padding:36px 18px 52px;justify-content:flex-end}.hero h1{letter-spacing:-2.5px}.search-shell{grid-template-columns:1fr;padding:10px}.field{border-right:0;border-bottom:1px solid var(--line)}.date-grid{grid-template-columns:1fr 1fr}.guest-popover{position:fixed;left:18px;right:18px;top:auto;bottom:18px;width:auto}.cards,.low-grid,.strengths,footer{grid-template-columns:1fr}.section{padding:56px 18px}.results-head{align-items:start;flex-direction:column}}
 </style>
@@ -60,7 +88,21 @@ footer{background:#052f39;color:#fff;padding:42px 5vw;display:grid;grid-template
 <header class="hero">
   <div class="topbar">
     <div class="brand"><span>voytana<i>✓</i></span><span class="tagline">Viaggi. Pensati per te.</span></div>
-    <div class="utility"><span>🌐 Italiano</span><span>♡ I miei viaggi</span><span>♙ Accedi</span></div>
+    
+<div class="utility">
+  <div class="utility-wrap">
+    <button class="utility-btn" id="languageButton" aria-expanded="false">🌐 <span id="languageLabel">Italiano</span> ▾</button>
+    <div class="language-menu" id="languageMenu">
+      <button data-lang="it">Italiano</button>
+      <button data-lang="en">English</button>
+      <button data-lang="es">Español</button>
+      <button data-lang="fr">Français</button>
+      <button data-lang="de">Deutsch</button>
+    </div>
+  </div>
+  <button class="utility-btn" id="savedTripsButton">♡ <span data-i18n="myTrips">I miei viaggi</span> <span class="saved-count" id="savedCount">0</span></button>
+  <button class="utility-btn" id="loginButton">♙ <span id="loginLabel" data-i18n="login">Accedi</span></button>
+</div>
   </div>
 
   <nav class="nav">
@@ -74,15 +116,15 @@ footer{background:#052f39;color:#fff;padding:42px 5vw;display:grid;grid-template
   </nav>
 
   <div class="hero-inner">
-    <h1>Scegli il tuo <span>budget.</span><br>Al viaggio pensiamo noi.</h1>
-    <p>Imposta una cifra e ricevi tre proposte selezionate per te, senza liste infinite e senza confusione.</p>
+    <h1><span data-i18n="hero1">Scegli il tuo</span> <span>budget.</span><br><span data-i18n="hero2">Al viaggio pensiamo noi.</span></h1>
+    <p data-i18n="heroSub">Imposta una cifra e ricevi tre proposte selezionate per te, senza liste infinite e senza confusione.</p>
 
     <div class="search-shell">
-      <div class="field"><label>Partenza</label><input id="from" value="Napoli" placeholder="Da dove vuoi partire?"></div>
-      <div class="field"><label>Destinazione</label><input id="to" placeholder="Dove vuoi andare?"></div>
-      <div class="field"><label>Date</label><div class="date-grid"><input id="dateFrom" type="date" aria-label="Andata"><input id="dateTo" type="date" aria-label="Ritorno"></div></div>
+      <div class="field"><label data-i18n="departure">Partenza</label><input id="from" value="Napoli" placeholder="Da dove vuoi partire?"></div>
+      <div class="field"><label data-i18n="destination">Destinazione</label><input id="to" placeholder="Dove vuoi andare?"></div>
+      <div class="field"><label data-i18n="dates">Date</label><div class="date-grid"><input id="dateFrom" type="date" aria-label="Andata"><input id="dateTo" type="date" aria-label="Ritorno"></div></div>
       <div class="field">
-        <label>Ospiti e camere</label>
+        <label data-i18n="guestsRooms">Ospiti e camere</label>
         <button class="field-button" id="guestButton">2 adulti · 0 bambini · 1 camera</button>
         <div class="guest-popover" id="guestPopover">
           <div class="guest-row"><div><strong>Adulti</strong><br><small>Età 18+</small></div><div class="counter"><button data-minus="adults">−</button><span id="adultsCount">2</span><button data-plus="adults">+</button></div></div>
@@ -91,15 +133,15 @@ footer{background:#052f39;color:#fff;padding:42px 5vw;display:grid;grid-template
           <button class="apply-guests" id="applyGuests">Fatto</button>
         </div>
       </div>
-      <div class="field"><label>Budget totale</label><input id="budget" type="number" min="100" step="50" value="1000"></div>
-      <button class="search-btn" id="searchBtn">Cerca</button>
+      <div class="field"><label data-i18n="totalBudget">Budget totale</label><input id="budget" type="number" min="100" step="50" value="1000"></div>
+      <button class="search-btn" id="searchBtn" data-i18n="search">Cerca</button>
     </div>
 
-    <div class="budget-note">🎯 Ti mostreremo solo proposte vicine al tuo budget.</div>
+    <div class="budget-note">🎯 <span data-i18n="budgetNote">Ti mostreremo solo proposte vicine al tuo budget.</span></div>
     <div class="quick">
-      <button id="weekendBtn">📅 Weekend</button>
-      <button id="surpriseBtn">✨ Sorprendimi</button>
-      <button id="filtersBtn">⚙️ Filtri avanzati</button>
+      <button id="weekendBtn">📅 <span data-i18n="weekend">Weekend</span></button>
+      <button id="surpriseBtn">✨ <span data-i18n="surprise">Sorprendimi</span></button>
+      <button id="filtersBtn">⚙️ <span data-i18n="filters">Filtri avanzati</span></button>
     </div>
   </div>
 </header>
@@ -107,8 +149,8 @@ footer{background:#052f39;color:#fff;padding:42px 5vw;display:grid;grid-template
 <main>
 <section class="section" id="resultsSection">
   <div class="results-head">
-    <div><h2>Le tue 3 proposte</h2><p class="sub" id="summary">Selezionate vicino al tuo budget.</p></div>
-    <button id="moreBtn">Mostrami altre 3 →</button>
+    <div><h2 data-i18n="threeOffers">Le tue 3 proposte</h2><p class="sub" id="summary">Selezionate vicino al tuo budget.</p></div>
+    <button id="moreBtn"><span data-i18n="moreThree">Mostrami altre 3</span> →</button>
   </div>
   <div class="notice" id="notice">Prezzi dimostrativi: il prezzo reale sarà verificato dal partner al momento della prenotazione.</div>
   <div class="cards" id="cards"></div>
@@ -181,7 +223,7 @@ function render(){
    const diff=d.total-budget;
    const status=diff<=0?"€"+euro(Math.abs(diff))+" sotto il budget":"Solo €"+euro(diff)+" sopra il budget";
    cards.insertAdjacentHTML("beforeend",
-   '<article class="card"><div class="photo" style="background-image:url(\''+d.img+'\')">'+(i===0?'<span class="badge">SCELTA VOYTANA</span>':'')+'</div>'+
+   '<article class="card"><div class="photo" style="background-image:url(\''+d.img+'\')"><button class="save-trip '+(getSavedTrips().some(x=>x.city===d.city)?'saved':'')+'" onclick="event.stopPropagation();toggleSaveTrip(\''+d.city.replace(/\'/g,"\\\\\'")+'\')" aria-label="Salva viaggio">'+(getSavedTrips().some(x=>x.city===d.city)?'♥':'♡')+'</button>'+(i===0?'<span class="badge">SCELTA VOYTANA</span>':'')+'</div>'+
    '<div class="card-body"><div class="card-top"><div><small>'+d.country+'</small><h3>'+d.city+'</h3></div><span class="rating">'+d.rating+'</span></div>'+
    '<p>'+d.desc+'</p><div class="meta">'+d.tags.map(t=>'<span>'+t+'</span>').join("")+'<span>'+d.stars+' stelle</span></div>'+
    '<div class="price-row"><div class="price"><small>Totale stimato</small><strong>€'+euro(d.total)+'</strong><small>'+status+'</small></div><button class="book" onclick="book(\''+d.city+'\')">Vedi e prenota</button></div></div></article>');
@@ -212,8 +254,34 @@ document.getElementById("weekendBtn").onclick=()=>{document.getElementById("date
 document.getElementById("filtersBtn").onclick=()=>alert("Filtri avanzati: stelle, trattamento, flessibilità date e preferenze.");
 document.querySelectorAll(".nav button").forEach(btn=>btn.onclick=()=>{document.querySelectorAll(".nav button").forEach(b=>b.classList.remove("active"));btn.classList.add("active");mode=btn.dataset.mode;offset=0;render()});
 document.querySelectorAll("[data-low]").forEach(btn=>btn.onclick=()=>{document.getElementById("budget").value=700;document.getElementById("to").value="";offset=0;shuffled=false;render();document.getElementById("resultsSection").scrollIntoView({behavior:"smooth"})});
-updateGuestText();render();
+updateGuestText();
 </script>
+
+
+<div class="modal-backdrop" id="savedTripsModal" role="dialog" aria-modal="true">
+  <div class="modal">
+    <button class="modal-close" data-close-modal="savedTripsModal">×</button>
+    <h2 data-i18n="myTrips">I miei viaggi</h2>
+    <p data-i18n="savedIntro">Qui trovi le proposte che hai salvato.</p>
+    <div class="saved-list" id="savedTripsList"></div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="loginModal" role="dialog" aria-modal="true">
+  <div class="modal">
+    <button class="modal-close" data-close-modal="loginModal">×</button>
+    <h2 data-i18n="loginTitle">Accedi a Voytana</h2>
+    <p data-i18n="loginIntro">Salva i tuoi viaggi e ritrova le tue preferenze.</p>
+    <form class="login-form" id="loginForm">
+      <label data-i18n="name">Nome</label>
+      <input id="loginName" required autocomplete="name">
+      <label>Email</label>
+      <input id="loginEmail" type="email" required autocomplete="email">
+      <button class="login-submit" type="submit" data-i18n="continue">Continua</button>
+    </form>
+    <button id="logoutButton" class="login-submit" style="display:none;background:#b44343" type="button" data-i18n="logout">Esci</button>
+  </div>
+</div>
 
 <div id="cookieBanner" style="position:fixed;left:18px;right:18px;bottom:18px;z-index:9999;background:#fff;color:#0b3440;border:1px solid #dce6e7;border-radius:16px;box-shadow:0 18px 50px rgba(4,38,48,.24);padding:16px;display:none;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap">
   <div style="max-width:850px"><strong>Cookie e privacy</strong><br><span style="color:#65767b">Usiamo solo cookie tecnici necessari al funzionamento del sito. Gli eventuali cookie di partner esterni saranno attivati secondo le loro impostazioni.</span></div>
@@ -222,6 +290,73 @@ updateGuestText();render();
     <button id="acceptCookies" style="border:0;border-radius:10px;background:#08a78f;color:#fff;padding:10px 16px;font-weight:900">Ho capito</button>
   </div>
 </div>
+
+<script>
+const translations={
+  it:{language:"Italiano",myTrips:"I miei viaggi",login:"Accedi",hero1:"Scegli il tuo",hero2:"Al viaggio pensiamo noi.",heroSub:"Imposta una cifra e ricevi tre proposte selezionate per te, senza liste infinite e senza confusione.",search:"Cerca",budgetNote:"Ti mostreremo solo proposte vicine al tuo budget.",weekend:"Weekend",surprise:"Sorprendimi",filters:"Filtri avanzati",threeOffers:"Le tue 3 proposte",moreThree:"Mostrami altre 3",departure:"Partenza",destination:"Destinazione",dates:"Date",guestsRooms:"Ospiti e camere",totalBudget:"Budget totale",savedIntro:"Qui trovi le proposte che hai salvato.",loginTitle:"Accedi a Voytana",loginIntro:"Salva i tuoi viaggi e ritrova le tue preferenze.",name:"Nome",continue:"Continua",logout:"Esci",emptySaved:"Non hai ancora salvato nessun viaggio.",remove:"Rimuovi",saved:"Salvato"},
+  en:{language:"English",myTrips:"My trips",login:"Sign in",hero1:"Choose your",hero2:"We take care of the trip.",heroSub:"Set an amount and receive three selected proposals, without endless lists or confusion.",search:"Search",budgetNote:"We will only show options close to your budget.",weekend:"Weekend",surprise:"Surprise me",filters:"Advanced filters",threeOffers:"Your 3 proposals",moreThree:"Show me 3 more",departure:"Departure",destination:"Destination",dates:"Dates",guestsRooms:"Guests and rooms",totalBudget:"Total budget",savedIntro:"Here are the proposals you saved.",loginTitle:"Sign in to Voytana",loginIntro:"Save your trips and preferences.",name:"Name",continue:"Continue",logout:"Sign out",emptySaved:"You have not saved any trips yet.",remove:"Remove",saved:"Saved"},
+  es:{language:"Español",myTrips:"Mis viajes",login:"Acceder",hero1:"Elige tu",hero2:"Nosotros pensamos en el viaje.",heroSub:"Indica una cifra y recibe tres propuestas seleccionadas, sin listas infinitas ni confusión.",search:"Buscar",budgetNote:"Solo mostraremos propuestas cercanas a tu presupuesto.",weekend:"Fin de semana",surprise:"Sorpréndeme",filters:"Filtros avanzados",threeOffers:"Tus 3 propuestas",moreThree:"Muéstrame otras 3",departure:"Salida",destination:"Destino",dates:"Fechas",guestsRooms:"Huéspedes y habitaciones",totalBudget:"Presupuesto total",savedIntro:"Aquí encontrarás las propuestas guardadas.",loginTitle:"Accede a Voytana",loginIntro:"Guarda tus viajes y preferencias.",name:"Nombre",continue:"Continuar",logout:"Salir",emptySaved:"Todavía no has guardado ningún viaje.",remove:"Eliminar",saved:"Guardado"},
+  fr:{language:"Français",myTrips:"Mes voyages",login:"Se connecter",hero1:"Choisissez votre",hero2:"Nous nous occupons du voyage.",heroSub:"Indiquez un montant et recevez trois propositions sélectionnées, sans listes interminables.",search:"Rechercher",budgetNote:"Nous afficherons uniquement des propositions proches de votre budget.",weekend:"Week-end",surprise:"Surprenez-moi",filters:"Filtres avancés",threeOffers:"Vos 3 propositions",moreThree:"Afficher 3 autres",departure:"Départ",destination:"Destination",dates:"Dates",guestsRooms:"Voyageurs et chambres",totalBudget:"Budget total",savedIntro:"Retrouvez ici les propositions enregistrées.",loginTitle:"Se connecter à Voytana",loginIntro:"Enregistrez vos voyages et préférences.",name:"Nom",continue:"Continuer",logout:"Se déconnecter",emptySaved:"Vous n'avez encore enregistré aucun voyage.",remove:"Supprimer",saved:"Enregistré"},
+  de:{language:"Deutsch",myTrips:"Meine Reisen",login:"Anmelden",hero1:"Wähle dein",hero2:"Wir kümmern uns um die Reise.",heroSub:"Lege einen Betrag fest und erhalte drei ausgewählte Vorschläge, ohne endlose Listen.",search:"Suchen",budgetNote:"Wir zeigen nur Vorschläge in der Nähe deines Budgets.",weekend:"Wochenende",surprise:"Überrasche mich",filters:"Erweiterte Filter",threeOffers:"Deine 3 Vorschläge",moreThree:"3 weitere anzeigen",departure:"Abreise",destination:"Reiseziel",dates:"Daten",guestsRooms:"Gäste und Zimmer",totalBudget:"Gesamtbudget",savedIntro:"Hier findest du deine gespeicherten Vorschläge.",loginTitle:"Bei Voytana anmelden",loginIntro:"Speichere Reisen und Vorlieben.",name:"Name",continue:"Weiter",logout:"Abmelden",emptySaved:"Du hast noch keine Reise gespeichert.",remove:"Entfernen",saved:"Gespeichert"}
+};
+let currentLang=localStorage.getItem("voytana_language")||"it";
+function t(key){return (translations[currentLang]&&translations[currentLang][key])||translations.it[key]||key}
+function applyLanguage(lang){
+  currentLang=lang;localStorage.setItem("voytana_language",lang);
+  document.documentElement.lang=lang;
+  document.getElementById("languageLabel").textContent=t("language");
+  document.querySelectorAll("[data-i18n]").forEach(el=>{const key=el.dataset.i18n;if(t(key))el.textContent=t(key)});
+  document.getElementById("languageMenu").classList.remove("open");
+  document.getElementById("languageButton").setAttribute("aria-expanded","false");
+  renderSavedTrips();
+}
+const languageButton=document.getElementById("languageButton");
+languageButton.onclick=e=>{e.stopPropagation();const menu=document.getElementById("languageMenu");menu.classList.toggle("open");languageButton.setAttribute("aria-expanded",menu.classList.contains("open"))};
+document.querySelectorAll("[data-lang]").forEach(btn=>btn.onclick=()=>applyLanguage(btn.dataset.lang));
+
+function openModal(id){document.getElementById(id).classList.add("open")}
+function closeModal(id){document.getElementById(id).classList.remove("open")}
+document.querySelectorAll("[data-close-modal]").forEach(btn=>btn.onclick=()=>closeModal(btn.dataset.closeModal));
+document.querySelectorAll(".modal-backdrop").forEach(m=>m.onclick=e=>{if(e.target===m)closeModal(m.id)});
+
+function getSavedTrips(){try{return JSON.parse(localStorage.getItem("voytana_saved_trips")||"[]")}catch{return []}}
+function setSavedTrips(items){localStorage.setItem("voytana_saved_trips",JSON.stringify(items));updateSavedCount()}
+function updateSavedCount(){document.getElementById("savedCount").textContent=getSavedTrips().length}
+function toggleSaveTrip(city){
+  let items=getSavedTrips();
+  const existing=items.findIndex(x=>x.city===city);
+  if(existing>=0)items.splice(existing,1);
+  else{
+    const d=destinations.find(x=>x.city===city);
+    if(d)items.push({city:d.city,country:d.country,img:d.img,price:d.price,rating:d.rating});
+  }
+  setSavedTrips(items);render();renderSavedTrips();
+}
+function renderSavedTrips(){
+  const list=document.getElementById("savedTripsList"),items=getSavedTrips();
+  if(!items.length){list.innerHTML='<div class="empty-saved">'+t("emptySaved")+'</div>';return}
+  list.innerHTML=items.map(x=>'<div class="saved-item"><img src="'+x.img+'" alt=""><div><h3>'+x.city+'</h3><small>'+x.country+' · €'+euro(x.price)+' · '+x.rating+'</small></div><button class="remove-saved" onclick="toggleSaveTrip(\''+x.city.replace(/'/g,"\\'")+'\')">'+t("remove")+'</button></div>').join("");
+}
+document.getElementById("savedTripsButton").onclick=()=>{renderSavedTrips();openModal("savedTripsModal")};
+
+function updateLoginState(){
+  const user=JSON.parse(localStorage.getItem("voytana_user")||"null");
+  const label=document.getElementById("loginLabel"),form=document.getElementById("loginForm"),logout=document.getElementById("logoutButton");
+  if(user){label.textContent=user.name;form.style.display="none";logout.style.display="block"}
+  else{label.textContent=t("login");form.style.display="block";logout.style.display="none"}
+}
+document.getElementById("loginButton").onclick=()=>{updateLoginState();openModal("loginModal")};
+document.getElementById("loginForm").onsubmit=e=>{
+  e.preventDefault();
+  localStorage.setItem("voytana_user",JSON.stringify({name:document.getElementById("loginName").value.trim(),email:document.getElementById("loginEmail").value.trim()}));
+  updateLoginState();closeModal("loginModal");
+};
+document.getElementById("logoutButton").onclick=()=>{localStorage.removeItem("voytana_user");updateLoginState();closeModal("loginModal")};
+
+document.addEventListener("click",()=>{document.getElementById("languageMenu").classList.remove("open")});
+applyLanguage(currentLang);updateSavedCount();updateLoginState();render();
+</script>
+
 <script>
 (function(){
   const banner=document.getElementById("cookieBanner");
