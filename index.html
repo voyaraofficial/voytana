@@ -134,8 +134,8 @@ footer{background:#052f39;color:#fff;padding:42px 5vw;display:grid;grid-template
 <footer>
   <div><div class="brand">voytana<i>✓</i></div><p>Voytana — Scegli il tuo budget. Al viaggio pensiamo noi.</p></div>
   <div><h4>Prodotto</h4><a href="#resultsSection">Ricerca</a><a href="#resultsSection">Proposte</a><a href="#lowcost">Low cost</a></div>
-  <div><h4>Voytana</h4><a href="#">Come funziona</a><a href="#">Contatti</a></div>
-  <div><h4>Legale</h4><a href="#">Privacy</a><a href="#">Cookie</a><a href="#">Termini</a></div>
+  <div><h4>Voytana</h4><a href="chi-siamo.html">Chi siamo</a><a href="come-funziona.html">Come funziona</a><a href="contatti.html">Contatti</a></div>
+  <div><h4>Legale</h4><a href="privacy.html">Privacy</a><a href="cookie.html">Cookie</a><a href="termini.html">Termini</a></div>
 </footer>
 
 <script>
@@ -214,5 +214,24 @@ document.querySelectorAll(".nav button").forEach(btn=>btn.onclick=()=>{document.
 document.querySelectorAll("[data-low]").forEach(btn=>btn.onclick=()=>{document.getElementById("budget").value=700;document.getElementById("to").value="";offset=0;shuffled=false;render();document.getElementById("resultsSection").scrollIntoView({behavior:"smooth"})});
 updateGuestText();render();
 </script>
+
+<div id="cookieBanner" style="position:fixed;left:18px;right:18px;bottom:18px;z-index:9999;background:#fff;color:#0b3440;border:1px solid #dce6e7;border-radius:16px;box-shadow:0 18px 50px rgba(4,38,48,.24);padding:16px;display:none;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap">
+  <div style="max-width:850px"><strong>Cookie e privacy</strong><br><span style="color:#65767b">Usiamo solo cookie tecnici necessari al funzionamento del sito. Gli eventuali cookie di partner esterni saranno attivati secondo le loro impostazioni.</span></div>
+  <div style="display:flex;gap:10px">
+    <a href="cookie.html" style="padding:10px 14px;border:1px solid #08a78f;border-radius:10px;color:#08a78f;text-decoration:none;font-weight:800">Scopri di più</a>
+    <button id="acceptCookies" style="border:0;border-radius:10px;background:#08a78f;color:#fff;padding:10px 16px;font-weight:900">Ho capito</button>
+  </div>
+</div>
+<script>
+(function(){
+  const banner=document.getElementById("cookieBanner");
+  if(!localStorage.getItem("voytana_cookie_notice")) banner.style.display="flex";
+  document.getElementById("acceptCookies").onclick=function(){
+    localStorage.setItem("voytana_cookie_notice","accepted");
+    banner.style.display="none";
+  };
+})();
+</script>
+
 </body>
 </html>

@@ -1,0 +1,23 @@
+VOYTANA 1.0 AFFILIATE READY
+
+FILE PRINCIPALI
+- index.html
+- chi-siamo.html
+- come-funziona.html
+- contatti.html
+- privacy.html
+- cookie.html
+- termini.html
+
+COME PUBBLICARE
+1. Apri il repository GitHub collegato a Vercel.
+2. Carica tutti i file nella cartella principale.
+3. Conferma la sostituzione di index.html.
+4. Premi Commit changes.
+5. Attendi il deploy di Vercel.
+6. Prova tutti i link dal sito pubblicato.
+
+DA PERSONALIZZARE
+- Sostituire info@voytana.com se non è ancora attiva.
+- Aggiornare le pagine legali quando saranno attivati analytics, newsletter e partner.
+- Inserire i link affiliati definitivi appena disponibili.
