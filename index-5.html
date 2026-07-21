@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0d4d5a">
+<title>Voytana — Viaggi. Pensati per te.</title>
+<meta name="description" content="Voytana: inserisci il tuo budget e scopri tre proposte di viaggio alla volta.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://images.unsplash.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --brand:#0b4653;--brand2:#0f6c72;--brand3:#103743;--accent:#15b8a6;--accent2:#8ce9df;
+  --gold:#ffd166;--paper:#f4f7fa;--white:#fff;--ink:#182433;--muted:#6c7b8e;
+  --line:#dfe7ed;--good:#12835e;--danger:#b84c4c;--shadow:0 22px 60px rgba(9,63,76,.16);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,Arial,sans-serif}
+button,input,select{font:inherit}button{cursor:pointer}a{text-decoration:none;color:inherit}.shell{width:min(1220px,calc(100% - 28px));margin:auto}
+header{background:linear-gradient(135deg,var(--brand3),var(--brand2));color:#fff;position:relative;overflow:hidden}
+header:before{content:"";position:absolute;width:540px;height:540px;border-radius:50%;right:-180px;top:-230px;background:radial-gradient(circle,rgba(140,233,223,.23),transparent 68%)}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:16px 0;position:relative;z-index:2}
+.brand{display:flex;align-items:center;gap:11px}.logo{width:46px;height:46px}.logo svg{width:100%;height:100%}.brand strong{display:block;font:800 23px Manrope;letter-spacing:.11em}.brand small{font-size:9px;letter-spacing:.13em;color:#bceee9}
+.nav-right{display:flex;align-items:center;gap:9px}.nav-right select,.nav-right a{border:1px solid rgba(255,255,255,.23);border-radius:999px;background:rgba(255,255,255,.08);color:#fff;padding:10px 14px;font-weight:750}.nav-right option{color:#111}
+.category-tabs{display:flex;gap:8px;overflow:auto;padding:16px 0 28px;scrollbar-width:none}.category-tabs::-webkit-scrollbar{display:none}.cat{white-space:nowrap;border:1px solid transparent;background:transparent;color:#d6f5f1;border-radius:999px;padding:11px 16px;font-weight:800}.cat.active{border-color:#fff;background:rgba(255,255,255,.12)}
+.hero{padding:28px 0 72px;position:relative;z-index:1}.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:44px;align-items:center}
+.hero h1{font:800 clamp(42px,5.6vw,74px)/1 Manrope;letter-spacing:-.055em;margin:0 0 18px}.hero p{font-size:18px;line-height:1.6;color:#d9f1ee;max-width:720px}.hero-badges{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}.hero-badges span{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);padding:9px 12px;border-radius:999px;font-size:12px;font-weight:700}
+.hero-visual{min-height:380px;border-radius:28px;background:linear-gradient(180deg,rgba(0,0,0,.05),rgba(0,0,0,.44)),url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=88') center/cover;box-shadow:0 28px 80px rgba(0,0,0,.25);position:relative;overflow:hidden}
+.hero-visual:after{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(20,184,166,.2),transparent 45%)}
+.float-card{position:absolute;z-index:2;background:rgba(255,255,255,.92);color:var(--ink);backdrop-filter:blur(12px);border-radius:18px;box-shadow:0 16px 40px rgba(0,0,0,.18);padding:15px 17px}.float-card strong,.float-card small{display:block}.float-card small{color:var(--muted);margin-top:4px}.fc1{left:18px;top:22px}.fc2{right:18px;bottom:22px}.fc2 strong{font-size:22px;color:var(--good)}
+.search-wrap{margin-top:-36px;position:relative;z-index:5}
+.search-card{background:#fff;border-radius:24px;box-shadow:var(--shadow);overflow:hidden;border:1px solid rgba(255,255,255,.7)}
+.search-top{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:22px 24px 16px}.search-top h2{font:800 29px Manrope;margin:0}.search-top p{margin:5px 0 0;color:var(--muted)}.surprise{border:0;border-radius:13px;background:linear-gradient(135deg,#fff4cc,#ffe295);color:#7b5600;padding:12px 16px;font-weight:800}
+.mode-switch{display:flex;gap:8px;padding:0 24px 16px;overflow:auto}.mode-switch button{border:1px solid var(--line);background:#f8fafb;color:#48606e;border-radius:999px;padding:9px 13px;font-weight:800;white-space:nowrap}.mode-switch button.active{background:var(--brand);color:#fff;border-color:var(--brand)}
+.search-grid{display:grid;grid-template-columns:1fr 1fr .95fr .85fr 1.15fr}.field{position:relative;min-height:96px;padding:17px 14px 13px 50px;border-top:1px solid var(--line);border-right:1px solid var(--line)}.field:last-child{border-right:0}.field .ico{position:absolute;left:16px;top:28px;font-size:22px}.field label{display:block;margin-bottom:7px;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:800}.field input,.field select{width:100%;border:0;outline:0;background:transparent;color:var(--ink);font-size:16px;font-weight:750}
+.budget-box{display:flex;align-items:center;gap:12px}.budget-box strong{font-size:24px;white-space:nowrap}.budget-box input{accent-color:var(--accent)}
+.quick-row{display:flex;align-items:center;gap:9px;flex-wrap:wrap;padding:13px 16px;background:#f2fbf9;border-top:1px solid var(--line)}.quick-row>strong{font-size:12px;color:var(--brand)}.pill{border:1px solid #bcded9;background:#fff;color:#45666d;border-radius:999px;padding:9px 13px;font-weight:800}.pill.active{background:var(--brand);color:#fff;border-color:var(--brand)}.grow{margin-left:auto}.advanced-toggle{border:0;background:transparent;color:var(--brand2);font-weight:800}
+.advanced{display:none;padding:18px;border-top:1px solid var(--line);background:#f8fafb}.advanced.show{display:block}.advanced-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}.advanced label{font-size:10px;color:var(--muted);font-weight:800;text-transform:uppercase}.advanced select,.advanced input{width:100%;margin-top:6px;border:1px solid var(--line);background:#fff;border-radius:11px;padding:11px}
+.pref-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}.pref{border:1px solid #d2dde3;background:#fff;color:#536979;border-radius:999px;padding:9px 12px;font-weight:750}.pref.active{background:#e6faf6;color:var(--brand2);border-color:#77d5c8}
+.search-actions{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center;padding:16px;background:#eef4f6;border-top:1px solid var(--line)}.search-actions p{margin:0;color:var(--muted);font-size:13px}.primary{border:0;border-radius:13px;padding:17px 24px;color:#fff;background:linear-gradient(135deg,var(--accent),var(--brand2));font-weight:800;font-size:17px;box-shadow:0 12px 25px rgba(15,108,114,.23)}
+.budget-presets{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}.budget-presets button{border:1px solid #d6e2e7;background:#fff;color:var(--brand);padding:10px 14px;border-radius:999px;font-weight:800}.budget-presets button.active{background:#e5faf7;border-color:#75d5c8}
+.section{padding:64px 0}.section-head{display:flex;justify-content:space-between;align-items:end;gap:18px;margin-bottom:24px}.section-head h2{font:800 35px Manrope;letter-spacing:-.03em;margin:0}.section-head p{margin:6px 0 0;color:var(--muted)}.link-btn{border:0;background:transparent;color:var(--brand2);font-weight:800}
+.summary{display:none;background:#fff;border:1px solid var(--line);border-radius:16px;padding:15px 18px;margin-bottom:17px}.summary.show{display:flex;justify-content:space-between;gap:14px}.summary span{color:var(--good);font-size:12px;font-weight:800}
+.results{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.card{background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden;box-shadow:var(--shadow);position:relative}.card.best{outline:2px solid #61cfc1}.badge{position:absolute;z-index:3;left:14px;top:14px;background:var(--brand);color:#fff;border-radius:999px;padding:8px 11px;font-size:10px;font-weight:800}.img{height:220px;background-position:center;background-size:cover;position:relative}.img:after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 52%,rgba(4,26,33,.68))}.match{position:absolute;z-index:2;right:13px;bottom:13px;background:#fff;color:var(--good);border-radius:999px;padding:8px 10px;font-size:11px;font-weight:800}
+.card-body{padding:18px}.country{font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:800}.title-line{display:flex;justify-content:space-between;gap:12px}.title-line h3{font-size:25px;margin:4px 0 7px}.rating{font-size:12px;font-weight:800;color:#d69200}.desc{font-size:13px;color:var(--muted);line-height:1.55;min-height:60px}.why{background:#effaf8;border-radius:11px;padding:11px;color:#285b57;font-size:11px;line-height:1.45}.tags{display:flex;flex-wrap:wrap;gap:7px;margin:13px 0}.tags span{background:#f1f5f7;border-radius:999px;padding:6px 8px;font-size:10px}.costs{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:12px 0}.costs div{background:#f8fafb;border:1px solid #edf1f3;border-radius:9px;padding:8px;text-align:center}.costs small,.costs strong{display:block}.costs small{font-size:8px;color:var(--muted)}.costs strong{font-size:11px;margin-top:3px}.price-line{display:flex;align-items:end;justify-content:space-between;border-top:1px solid var(--line);padding-top:14px}.price-line small{display:block;color:var(--muted);font-size:10px}.price-line strong{font-size:25px}.residual{font-size:10px;color:var(--good);font-weight:800}.book{border:0;background:var(--brand2);color:#fff;border-radius:10px;padding:11px 13px;font-weight:800}
+.lowcost{background:linear-gradient(135deg,#fff5d1,#fffaf0);border-top:1px solid #f4df99;border-bottom:1px solid #f4df99}.low-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:17px}.low-card{background:#fff;border:1px solid #f1dfaa;border-radius:18px;padding:20px;box-shadow:0 14px 35px rgba(110,82,11,.08)}.low-card h3{margin:8px 0}.low-card p{color:var(--muted);font-size:13px;line-height:1.5}.low-card button{border:0;background:#8b6500;color:#fff;border-radius:10px;padding:11px 14px;font-weight:800}
+.trust{display:grid;grid-template-columns:repeat(4,1fr);border-radius:18px;overflow:hidden;background:var(--brand);color:#fff}.trust div{display:flex;gap:13px;align-items:center;padding:22px;border-right:1px solid rgba(255,255,255,.12)}.trust div:last-child{border-right:0}.trust span{font-size:25px}.trust strong,.trust small{display:block}.trust small{color:#bddad8;margin-top:4px}
+.empty{display:none;background:#fff;border:1px solid var(--line);border-radius:18px;padding:34px;text-align:center}.empty.show{display:block}
+footer{background:#072f39;color:#fff;padding:44px 0 24px}.footer-grid{display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:30px}.footer-col{display:flex;flex-direction:column;gap:10px}.footer-col a,footer p{color:#abc7ca;font-size:13px}.footer-bottom{display:flex;justify-content:space-between;gap:16px;border-top:1px solid rgba(255,255,255,.1);padding-top:18px;margin-top:30px;color:#7fa4a8;font-size:12px}
+.toast{position:fixed;z-index:999;left:50%;bottom:24px;transform:translate(-50%,120px);background:var(--brand);color:#fff;padding:13px 18px;border-radius:999px;font-size:12px;transition:.3s}.toast.show{transform:translate(-50%,0)}
+@media(max-width:1050px){.hero-grid{grid-template-columns:1fr}.hero-visual{min-height:320px}.search-grid{grid-template-columns:1fr 1fr}.advanced-grid{grid-template-columns:1fr 1fr}.results,.low-grid{grid-template-columns:1fr}.trust{grid-template-columns:1fr 1fr}.trust div:nth-child(2){border-right:0}}
+@media(max-width:680px){.shell{width:min(100% - 20px,1220px)}.nav-right a{display:none}.brand strong{font-size:19px}.category-tabs{padding-bottom:20px}.hero{padding:18px 0 54px}.hero h1{font-size:42px}.hero p{font-size:15px}.hero-visual{min-height:280px}.search-wrap{margin-top:-22px}.search-top{padding:17px 15px 12px;align-items:flex-start}.search-top h2{font-size:23px}.mode-switch{padding:0 15px 13px}.search-grid,.advanced-grid{grid-template-columns:1fr}.field{border-right:0;min-height:82px}.quick-row{align-items:flex-start}.grow{margin-left:0;width:100%}.search-actions{grid-template-columns:1fr}.primary{width:100%}.section{padding:48px 0}.section-head{align-items:flex-start}.section-head h2{font-size:30px}.summary.show{flex-direction:column}.trust{grid-template-columns:1fr}.trust div{border-right:0;border-bottom:1px solid rgba(255,255,255,.12)}.footer-grid{grid-template-columns:1fr 1fr}.footer-grid>div:first-child{grid-column:1/-1}.footer-bottom{flex-direction:column}}
+</style>
+</head>
+<body>
+<header>
+  <div class="shell nav">
+    <a class="brand" href="#top">
+      <span class="logo"><svg viewBox="0 0 64 64"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8ce9df"/><stop offset=".6" stop-color="#15b8a6"/><stop offset="1" stop-color="#0f6c72"/></linearGradient></defs><circle cx="46" cy="14" r="7" fill="#ffd166"/><path d="M8 12h13l11 27 12-27h12L37 53c-2 4-8 4-10 0Z" fill="url(#g)"/><path d="M9 39c10-7 20-6 31-1 6 3 11 2 16-2-5 10-15 14-24 10-9-4-15-5-23 0Z" fill="#fff"/></svg></span>
+      <span><strong>VOYTANA</strong><small>VIAGGI. PENSATI PER TE.</small></span>
+    </a>
+    <div class="nav-right"><select aria-label="Lingua"><option>IT</option><option>EN</option><option>ES</option><option>FR</option></select><a href="#resultsSection">Le mie proposte</a></div>
+  </div>
+  <div class="shell category-tabs">
+    <button class="cat active" data-cat="stay">🏨 Soggiorni</button>
+    <button class="cat" data-cat="flight">✈️ Voli</button>
+    <button class="cat" data-cat="package">🧳 Volo + hotel</button>
+    <button class="cat" data-cat="car">🚗 Auto</button>
+    <button class="cat" data-cat="train">🚆 Treni</button>
+    <button class="cat" data-cat="cruise">🚢 Crociere</button>
+    <button class="cat" data-cat="experience">🎟 Esperienze</button>
+    <button class="cat" data-cat="low">🔥 Low cost</button>
+  </div>
+  <section class="hero" id="top"><div class="shell hero-grid">
+    <div>
+      <h1>Scegli il tuo budget.<br>Al viaggio pensiamo noi.</h1>
+      <p>La familiarità dei grandi portali, ma senza confusione: budget al centro, tre proposte alla volta, altre tre ogni volta che vuoi.</p>
+      <div class="hero-badges"><span>✓ 3 proposte curate</span><span>✓ Budget totale trasparente</span><span>✓ Weekend 1–3 notti</span><span>✓ Modalità low cost</span></div>
+    </div>
+    <div class="hero-visual"><div class="float-card fc1"><strong>Weekend da Napoli</strong><small>3 proposte entro €700</small></div><div class="float-card fc2"><small>Budget rispettato</small><strong>€642 totale</strong></div></div>
+  </div></section>
+</header>
+
+<div class="search-wrap"><div class="shell">
+  <div class="search-card">
+    <div class="search-top"><div><h2>Trova il viaggio giusto</h2><p>Scegli una meta oppure lascia che Voytana trovi le occasioni migliori.</p></div><button class="surprise" id="surprise">✦ Sorprendimi</button></div>
+    <div class="mode-switch">
+      <button class="active" data-mode="smart">Ricerca intelligente</button>
+      <button data-mode="lowflight">Voli low cost</button>
+      <button data-mode="lowweekend">Weekend low cost</button>
+      <button data-mode="lowtrip">Viaggi low cost</button>
+    </div>
+    <div class="search-grid">
+      <div class="field"><span class="ico">📍</span><label>Partenza</label><select id="departure"><option value="NAP">Napoli</option><option value="ROM">Roma</option><option value="MIL">Milano</option><option value="BLQ">Bologna</option><option value="VCE">Venezia</option></select></div>
+      <div class="field"><span class="ico">🌍</span><label>Destinazione</label><input id="destination" placeholder="Dove vuoi andare? (facoltativo)"></div>
+      <div class="field"><span class="ico">📅</span><label>Data di partenza</label><input id="dateFrom" type="date"></div>
+      <div class="field"><span class="ico">👥</span><label>Viaggiatori</label><select id="travelers"><option value="1">1 adulto</option><option value="2" selected>2 adulti</option><option value="3">3 persone</option><option value="4">4 persone</option><option value="5">5 persone</option></select></div>
+      <div class="field"><span class="ico">💶</span><label>Budget totale</label><div class="budget-box"><strong>€ <span id="budgetValue">1.000</span></strong><input id="budgetRange" type="range" min="250" max="6000" value="1000" step="50"></div></div>
+    </div>
+    <div class="quick-row"><strong>Weekend rapido:</strong><button class="pill active night" data-nights="1">1 notte</button><button class="pill night" data-nights="2">2 notti</button><button class="pill night" data-nights="3">3 notti</button><button class="advanced-toggle grow" id="customDuration">Viaggio più lungo ▾</button></div>
+    <button class="advanced-toggle" style="width:100%;padding:13px;border-top:1px solid var(--line);background:#f8fafb" id="toggle">Mostra filtri avanzati ▾</button>
+    <div class="advanced" id="advanced">
+      <div class="advanced-grid">
+        <label>Durata<select id="duration"><option value="1">1 notte</option><option value="2">2 notti</option><option value="3">3 notti</option><option value="4">4 notti</option><option value="5">5 notti</option><option value="7">7 notti</option><option value="10">10 notti</option><option value="14">14 notti</option></select></label>
+        <label>Tipo di viaggio<select id="vibe"><option value="any">Qualsiasi</option><option value="sea">Mare</option><option value="city">Città</option><option value="nature">Natura</option><option value="relax">Relax</option><option value="business">Lavoro</option></select></label>
+        <label>Hotel minimo<select id="stars"><option value="0">Qualsiasi</option><option value="3">3 stelle</option><option value="4" selected>4 stelle</option><option value="5">5 stelle</option></select></label>
+        <label>Flessibilità date<select id="flex"><option value="0">Date esatte</option><option value="3">± 3 giorni</option><option value="7">± 7 giorni</option><option value="30">Mese più economico</option></select></label>
+        <label>Ordina per<select id="sort"><option value="match">Miglior equilibrio</option><option value="price">Prezzo più basso</option><option value="rating">Recensioni migliori</option></select></label>
+      </div>
+      <div class="pref-row"><button class="pref" data-pref="beach">🏖 Spiaggia</button><button class="pref" data-pref="center">🏙 Centro</button><button class="pref" data-pref="family">👨‍👩‍👧 Famiglie</button><button class="pref" data-pref="couple">❤ Coppie</button><button class="pref" data-pref="pool">🏊 Piscina</button><button class="pref" data-pref="spa">🧖 Spa</button><button class="pref" data-pref="direct">✈ Volo diretto</button><button class="pref" data-pref="breakfast">☕ Colazione</button></div>
+    </div>
+    <div class="search-actions"><p>✓ Il motore combina budget, partenza, durata, persone, preferenze e qualità.</p><button class="primary" id="searchBtn">Trova le mie 3 migliori proposte</button></div>
+  </div>
+  <div class="budget-presets"><button data-budget="400">€400</button><button data-budget="700">€700</button><button data-budget="1000" class="active">€1.000</button><button data-budget="1500">€1.500</button><button data-budget="2500">€2.500</button></div>
+</div></div>
+
+<main>
+<section class="section" id="resultsSection"><div class="shell">
+  <div class="section-head"><div><h2>Le tue 3 proposte</h2><p>Tre opzioni diverse. Nessun risultato casuale, nessun prezzo oltre budget.</p></div><button class="link-btn" id="more">Mostrami altre 3 ↻</button></div>
+  <div class="summary" id="summary"></div><div class="results" id="results"></div><div class="empty" id="empty"><h3>Nessuna proposta rispetta tutti i parametri.</h3><p>Prova ad aumentare il budget, ridurre la durata o rendere le date più flessibili.</p></div>
+</div></section>
+
+<section class="section lowcost"><div class="shell">
+  <div class="section-head"><div><h2>Occasioni low cost</h2><p>Tre modi rapidi per partire spendendo meno, senza sacrificare la qualità.</p></div></div>
+  <div class="low-grid">
+    <article class="low-card"><span>✈️</span><h3>Voli low cost</h3><p>Trova le tratte più economiche dal tuo aeroporto, con date flessibili e priorità ai voli diretti.</p><button data-low="lowflight">Cerca voli low cost</button></article>
+    <article class="low-card"><span>🌙</span><h3>Weekend low cost</h3><p>1, 2 o 3 notti: Voytana confronta durata, volo e soggiorno per trovare il miglior totale.</p><button data-low="lowweekend">Cerca weekend low cost</button></article>
+    <article class="low-card"><span>🧳</span><h3>Viaggi low cost</h3><p>Pacchetti più lunghi con destinazione libera, mese economico e prezzo complessivo trasparente.</p><button data-low="lowtrip">Cerca viaggi low cost</button></article>
+  </div>
+</div></section>
+
+<section class="section"><div class="shell"><div class="trust">
+  <div><span>③</span><p><strong>Tre alla volta</strong><small>Chiedine altre tre finché vuoi</small></p></div>
+  <div><span>🎯</span><p><strong>Budget-first</strong><small>Prima quanto vuoi spendere</small></p></div>
+  <div><span>🔥</span><p><strong>Low cost intelligente</strong><small>Prezzo basso, qualità controllata</small></p></div>
+  <div><span>🛡</span><p><strong>Trasparenza</strong><small>Totale e budget residuo</small></p></div>
+</div></div></section>
+</main>
+
+<footer><div class="shell footer-grid">
+  <div><a class="brand" href="#top"><span class="logo"><svg viewBox="0 0 64 64"><circle cx="46" cy="14" r="7" fill="#ffd166"/><path d="M8 12h13l11 27 12-27h12L37 53c-2 4-8 4-10 0Z" fill="#15b8a6"/><path d="M9 39c10-7 20-6 31-1 6 3 11 2 16-2-5 10-15 14-24 10-9-4-15-5-23 0Z" fill="#fff"/></svg></span><span><strong>VOYTANA</strong><small>VIAGGI. PENSATI PER TE.</small></span></a><p>Scegli il tuo budget. Al viaggio pensiamo noi.</p></div>
+  <div class="footer-col"><strong>Prodotto</strong><a href="#top">Ricerca</a><a href="#resultsSection">Proposte</a><a href="#resultsSection">Low cost</a></div>
+  <div class="footer-col"><strong>Voytana</strong><a href="#">Come funziona</a><a href="mailto:hello@voytana.com">Contatti</a></div>
+  <div class="footer-col"><strong>Legale</strong><a href="#">Privacy</a><a href="#">Cookie</a><a href="#">Termini</a></div>
+</div><div class="shell footer-bottom"><span>© 2026 Voytana</span><span>voytana.com</span></div></footer>
+<div class="toast" id="toast"></div>
+
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)],fmt=n=>Number(n).toLocaleString('it-IT');
+const trips=[
+{city:'Vienna',country:'Austria',aliases:['vienna'],img:'https://images.unsplash.com/photo-1516550893923-42d28e5677af?auto=format&fit=crop&w=1000&q=88',v:['city'],stars:4,r:4.8,base:285,flight:125,p:['center','couple','family','direct','breakfast'],from:['NAP','ROM','MIL','BLQ','VCE'],text:'Elegante, culturale e perfetta per un weekend ben organizzato.'},
+{city:'Budapest',country:'Ungheria',aliases:['budapest'],img:'https://images.unsplash.com/photo-1549877452-9c387954fbc2?auto=format&fit=crop&w=1000&q=88',v:['city','relax'],stars:4,r:4.7,base:245,flight:110,p:['center','spa','couple','direct','breakfast'],from:['NAP','ROM','MIL','BLQ'],text:'Terme, panorama sul Danubio e ottimo rapporto qualità-prezzo.'},
+{city:'Valencia',country:'Spagna',aliases:['valencia'],img:'https://images.unsplash.com/photo-1599310298861-029f36f0e915?auto=format&fit=crop&w=1000&q=88',v:['city','sea'],stars:4,r:4.8,base:300,flight:145,p:['beach','center','family','couple','direct'],from:['NAP','ROM','MIL'],text:'Mare, centro storico e cucina: una destinazione completa e luminosa.'},
+{city:'Cracovia',country:'Polonia',aliases:['cracovia','krakow'],img:'https://images.unsplash.com/photo-1607427293702-036933bbf746?auto=format&fit=crop&w=1000&q=88',v:['city'],stars:4,r:4.6,base:210,flight:95,p:['center','family','couple','direct','breakfast'],from:['NAP','ROM','MIL','BLQ','VCE'],text:'Cultura, atmosfera e convenienza senza rinunciare alla qualità.'},
+{city:'Praga',country:'Repubblica Ceca',aliases:['praga','prague'],img:'https://images.unsplash.com/photo-1541849546-216549ae216d?auto=format&fit=crop&w=1000&q=88',v:['city'],stars:4,r:4.8,base:255,flight:120,p:['center','couple','family','breakfast'],from:['ROM','MIL','BLQ','VCE','NAP'],text:'Romantica e compatta, perfetta per due o tre notti.'},
+{city:'Barcellona',country:'Spagna',aliases:['barcellona','barcelona'],img:'https://images.unsplash.com/photo-1583422409516-2895a77efded?auto=format&fit=crop&w=1000&q=88',v:['city','sea'],stars:4,r:4.7,base:340,flight:160,p:['beach','center','family','couple','direct'],from:['NAP','ROM','MIL'],text:'Architettura, mare e tapas in una fuga urbana piena di energia.'},
+{city:'Atene',country:'Grecia',aliases:['atene','athens'],img:'https://images.unsplash.com/photo-1555993539-1732b0258235?auto=format&fit=crop&w=1000&q=88',v:['city','sea'],stars:4,r:4.8,base:310,flight:145,p:['center','family','couple','direct'],from:['NAP','ROM','MIL','BLQ'],text:'Storia, rooftop e cucina autentica con ottimo equilibrio di prezzo.'},
+{city:'Malta',country:'Malta',aliases:['malta'],img:'https://images.unsplash.com/photo-1514222134-b57cbb8ce073?auto=format&fit=crop&w=1000&q=88',v:['sea','relax'],stars:4,r:4.6,base:355,flight:135,p:['beach','pool','family','couple','direct','breakfast'],from:['NAP','ROM','MIL'],text:'Mare e storia in una destinazione semplice da raggiungere e vivere.'},
+{city:'Lisbona',country:'Portogallo',aliases:['lisbona','lisbon'],img:'https://images.unsplash.com/photo-1555881400-74d7acaacd8b?auto=format&fit=crop&w=1000&q=88',v:['city','sea'],stars:4,r:4.8,base:375,flight:175,p:['center','couple','family','breakfast'],from:['ROM','MIL','NAP'],text:'Quartieri iconici, oceano e atmosfera autentica.'},
+{city:'Berlino',country:'Germania',aliases:['berlino','berlin'],img:'https://images.unsplash.com/photo-1560969184-10fe8719e047?auto=format&fit=crop&w=1000&q=88',v:['city','business'],stars:4,r:4.7,base:330,flight:150,p:['center','family','couple','direct'],from:['NAP','ROM','MIL','BLQ','VCE'],text:'Design, cultura e vita urbana per un weekend dinamico.'},
+{city:'Dubrovnik',country:'Croazia',aliases:['dubrovnik'],img:'https://images.unsplash.com/photo-1555990538-caa93e2f82ff?auto=format&fit=crop&w=1000&q=88',v:['sea','city'],stars:4,r:4.8,base:390,flight:165,p:['beach','center','couple','direct'],from:['NAP','ROM','MIL'],text:'Mura storiche, mare e scorci spettacolari.'},
+{city:'Istanbul',country:'Turchia',aliases:['istanbul'],img:'https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?auto=format&fit=crop&w=1000&q=88',v:['city','business'],stars:4,r:4.7,base:360,flight:170,p:['center','family','couple','spa','breakfast'],from:['NAP','ROM','MIL'],text:'Due continenti, grandi sapori e moltissimo valore.'},
+{city:'Sofia',country:'Bulgaria',aliases:['sofia'],img:'https://images.unsplash.com/photo-1603565816030-6b389eeb23cb?auto=format&fit=crop&w=1000&q=88',v:['city'],stars:4,r:4.5,base:190,flight:85,p:['center','family','couple','direct','breakfast'],from:['NAP','ROM','MIL','BLQ'],text:'Una capitale sorprendente, conveniente e facile da esplorare.'},
+{city:'Tirana',country:'Albania',aliases:['tirana'],img:'https://images.unsplash.com/photo-1602786122798-6424e9c4d9f7?auto=format&fit=crop&w=1000&q=88',v:['city','nature'],stars:4,r:4.5,base:185,flight:80,p:['center','family','couple','direct'],from:['NAP','ROM','MIL','BLQ'],text:'Prezzi accessibili, cucina vivace e tante escursioni vicine.'},
+{city:'Porto',country:'Portogallo',aliases:['porto'],img:'https://images.unsplash.com/photo-1555881400-69f7c3d954d4?auto=format&fit=crop&w=1000&q=88',v:['city','sea'],stars:4,r:4.8,base:340,flight:165,p:['center','couple','breakfast'],from:['ROM','MIL','NAP'],text:'Atmosfera autentica, panorami sul Douro e ottima cucina.'}
+];
+let mode='smart',surprise=true,current=[],offset=0,category='stay';
+const range=$('#budgetRange'),value=$('#budgetValue'),duration=$('#duration');
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.classList.remove('show'),2500)}
+function setBudget(v){range.value=v;value.textContent=fmt(v);$$('.budget-presets button').forEach(b=>b.classList.toggle('active',b.dataset.budget===String(v)))}
+range.oninput=e=>setBudget(e.target.value);$$('.budget-presets button').forEach(b=>b.onclick=()=>setBudget(b.dataset.budget));
+$$('.night').forEach(b=>b.onclick=()=>{$$('.night').forEach(x=>x.classList.remove('active'));b.classList.add('active');duration.value=b.dataset.nights});
+$('#customDuration').onclick=()=>{$('#advanced').classList.add('show');$('#toggle').textContent='Nascondi filtri avanzati ▴';duration.focus()};
+$('#toggle').onclick=()=>{$('#advanced').classList.toggle('show');$('#toggle').textContent=$('#advanced').classList.contains('show')?'Nascondi filtri avanzati ▴':'Mostra filtri avanzati ▾'};
+$$('.pref').forEach(b=>b.onclick=()=>b.classList.toggle('active'));
+$$('.cat').forEach(b=>b.onclick=()=>{$$('.cat').forEach(x=>x.classList.remove('active'));b.classList.add('active');category=b.dataset.cat;if(category==='low'){setMode('lowtrip')}toast(b.textContent.trim()+' selezionato')});
+$$('.mode-switch button').forEach(b=>b.onclick=()=>setMode(b.dataset.mode));
+$$('[data-low]').forEach(b=>b.onclick=()=>{setMode(b.dataset.low);document.querySelector('.search-wrap').scrollIntoView({behavior:'smooth'})});
+function setMode(m){mode=m;$$('.mode-switch button').forEach(x=>x.classList.toggle('active',x.dataset.mode===m));if(m==='lowflight'){setBudget(400);duration.value=1;$('#flex').value=30;$('#sort').value='price'}if(m==='lowweekend'){setBudget(700);duration.value=2;$('#flex').value=7;$('#sort').value='price'}if(m==='lowtrip'){setBudget(1000);duration.value=7;$('#flex').value=30;$('#sort').value='price'}if(m==='smart'){$('#sort').value='match'}toast('Modalità '+({smart:'Ricerca intelligente',lowflight:'Voli low cost',lowweekend:'Weekend low cost',lowtrip:'Viaggi low cost'}[m]))}
+$('#surprise').onclick=()=>{surprise=true;$('#destination').value='';toast('Sorprendimi attivato: Voytana diversifica le destinazioni.')};$('#destination').oninput=()=>surprise=!$('#destination').value.trim();
+function params(){return{budget:+range.value,dep:$('#departure').value,n:+duration.value,t:+$('#travelers').value,v:$('#vibe').value,stars:+$('#stars').value,sort:$('#sort').value,flex:+$('#flex').value,prefs:$$('.pref.active').map(b=>b.dataset.pref),dest:$('#destination').value.trim().toLowerCase()}}
+function evalTrip(t,p){
+ if(!t.from.includes(p.dep)||t.stars<p.stars||(p.v!=='any'&&!t.v.includes(p.v)))return null;
+ if(p.dest&&!([t.city,t.country,...t.aliases].join(' ').toLowerCase().includes(p.dest)))return null;
+ const prefMatches=p.prefs.filter(x=>t.p.includes(x)).length;
+ if(p.prefs.length&&!prefMatches)return null;
+
+ const flexDiscount=p.flex===30?.82:p.flex===7?.9:p.flex===3?.95:1;
+ const modeDiscount=mode==='lowflight'?.82:mode==='lowweekend'?.9:mode==='lowtrip'?.88:1;
+ const peopleFactor=.82+.18*Math.min(4,p.t)/2;
+
+ const hotel=Math.round(t.base*p.n*peopleFactor*modeDiscount);
+ const flight=Math.round(t.flight*p.t*flexDiscount*modeDiscount);
+ const fees=Math.round((hotel+flight)*.08);
+ const cost=hotel+flight+fees;
+
+ const tolerance=Math.min(80,Math.max(25,Math.round(p.budget*.06)));
+ if(cost>p.budget+tolerance)return null;
+
+ const distance=Math.abs(cost-p.budget);
+ const distanceRate=distance/Math.max(1,p.budget);
+ const quality=t.r/5;
+ let score=Math.round(
+   Math.max(0,1-distanceRate)*55 +
+   quality*28 +
+   (t.stars/5)*10 +
+   prefMatches*4
+ );
+ if(cost>p.budget)score-=2;
+ score=Math.max(1,Math.min(99,score));
+
+ return {...t,cost,hotel,flight,fees,residual:p.budget-cost,score,distance,tolerance};
+}
+function search(reset=true){
+ if(reset)offset=0;
+ const p=params();
+
+ const all=trips.map(t=>evalTrip(t,p)).filter(Boolean);
+ const preferredMinimum=Math.round(p.budget*.72);
+
+ const close=all.filter(t=>t.cost>=preferredMinimum);
+ const lower=all.filter(t=>t.cost<preferredMinimum);
+
+ const sorter=(a,b)=>{
+   if(p.sort==='price')return a.cost-b.cost;
+   if(p.sort==='rating')return b.r-a.r;
+   return a.distance-b.distance || b.score-a.score || b.r-a.r;
+ };
+
+ close.sort(sorter);
+ lower.sort(sorter);
+ current=[...close,...lower];
+
+ if(surprise&&current.length>3){
+   const diversified=[],used=new Set();
+   for(const item of current){
+     const vibe=item.v[0];
+     if(!used.has(vibe)){diversified.push(item);used.add(vibe)}
+   }
+   for(const item of current)if(!diversified.includes(item))diversified.push(item);
+   current=diversified;
+ }
+ render(p);
+}
+function partnerUrl(t,p){
+ const checkin=$('#dateFrom').value;
+ const checkoutDate=new Date(checkin+'T12:00:00');
+ checkoutDate.setDate(checkoutDate.getDate()+p.n);
+ const checkout=checkoutDate.toISOString().slice(0,10);
+ return 'https://www.booking.com/searchresults.it.html?'+new URLSearchParams({
+   ss:t.city+', '+t.country,
+   checkin:checkin,
+   checkout:checkout,
+   group_adults:String(Math.max(1,p.t)),
+   no_rooms:'1',
+   group_children:'0'
+ }).toString();
+}
+function render(p){
+ const slice=current.slice(offset,offset+3),res=$('#results');res.innerHTML='';
+ if(!slice.length){$('#empty').classList.add('show');$('#summary').classList.remove('show');return}
+ $('#empty').classList.remove('show');$('#summary').classList.add('show');
+ $('#summary').innerHTML=`<strong>${p.t} viaggiatori · ${p.n} ${p.n===1?'notte':'notti'} · partenza ${p.dep} · budget €${fmt(p.budget)}</strong><span>${current.length} proposte compatibili</span>`;
+
+ slice.forEach((t,i)=>{
+   const difference=t.cost-p.budget;
+   const budgetText=difference>0
+     ? `Solo €${fmt(difference)} sopra il budget`
+     : difference===0
+       ? 'Budget centrato'
+       : `Restano €${fmt(Math.abs(difference))}`;
+
+   res.insertAdjacentHTML('beforeend',`<article class="card ${i===0?'best':''}">${i===0?'<div class="badge">SCELTA VOYTANA</div>':''}<div class="img" style="background-image:url('${t.img}')"><span class="match">${t.score}% compatibile</span></div><div class="card-body"><span class="country">${t.country}</span><div class="title-line"><h3>${t.city}</h3><span class="rating">${t.r} ★</span></div><p class="desc">${t.text}</p><div class="why">Scelta perché è tra le proposte più vicine al budget impostato, considerando partenza, durata, persone, qualità e preferenze.</div><div class="tags"><span>✈ Volo incluso</span><span>🏨 ${p.n} ${p.n===1?'notte':'notti'}</span><span>⭐ ${t.stars} stelle</span><span>👥 ${p.t} persone</span></div><div class="costs"><div><small>Volo</small><strong>€${fmt(t.flight)}</strong></div><div><small>Hotel</small><strong>€${fmt(t.hotel)}</strong></div><div><small>Costi stimati</small><strong>€${fmt(t.fees)}</strong></div></div><div class="price-line"><div><small>Totale stimato</small><strong>€${fmt(t.cost)}</strong><div class="residual">${budgetText}</div></div><button class="book" data-url="${partnerUrl(t,p)}">Vedi e prenota</button></div></div></article>`);
+ });
+
+ $$('.book').forEach(button=>button.onclick=()=>window.open(button.dataset.url,'_blank','noopener'));
+ $('#resultsSection').scrollIntoView({behavior:'smooth'});
+}
+$('#searchBtn').onclick=()=>{const b=$('#searchBtn');b.textContent='Sto selezionando…';setTimeout(()=>{search(true);b.textContent='Trova le mie 3 migliori proposte'},550)};
+$('#more').onclick=()=>{if(!current.length)return search(true);offset+=3;if(offset>=current.length){offset=0;toast('Hai visto tutte le proposte compatibili: ripartiamo dalle migliori.')}render(params())};
+const d=new Date();d.setDate(d.getDate()+30);$('#dateFrom').value=d.toISOString().slice(0,10);search(true);
+</script>
+</body></html>
