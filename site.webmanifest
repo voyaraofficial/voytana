@@ -1,0 +1,8 @@
+{
+  "name": "Voytana",
+  "short_name": "Voytana",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#07121d",
+  "theme_color": "#07121d"
+}

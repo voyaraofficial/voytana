@@ -1,223 +1,176 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Voytana — Dimmi il tuo budget. Al viaggio pensiamo noi." />
-  <title>Voytana — Viaggi su misura del tuo budget</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Voytana — Viaggi budget-first | Voytana</title>
+<meta name="description" content="Voytana semplifica la ricerca del viaggio partendo dal budget e mostrando poche proposte curate.">
+<link rel="canonical" href="https://www.voytana.com/">
+<meta property="og:title" content="Voytana — Viaggi budget-first | Voytana">
+<meta property="og:description" content="Voytana semplifica la ricerca del viaggio partendo dal budget e mostrando poche proposte curate.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.voytana.com/">
+<meta name="theme-color" content="#07121d">
+<link rel="stylesheet" href="assets/styles.css">
 </head>
 <body>
-<header class="header">
-  <div class="container header-inner">
-    <a href="#top" class="brand"><span class="brand-mark">V</span><span>Voytana</span></a>
-    <nav class="desktop-nav" aria-label="Navigazione">
-      <button data-category="weekend">Weekend</button>
-      <button data-category="lowcost">Low cost</button>
-      <button data-category="villaggi">Villaggi</button>
-      <button data-category="surprise">Sorprendimi</button>
-      <button data-category="crociere">Crociere</button>
-    </nav>
-    <div class="header-actions">
-      <button class="icon-btn" id="languageBtn">IT</button>
-      <button class="icon-btn" id="favoritesBtn">♡</button>
-      <button class="contact-top" onclick="document.querySelector('#contact').scrollIntoView({behavior:'smooth'})">Contatti</button>
-      <button class="menu-btn" id="menuBtn">☰</button>
+
+<header class="site-header">
+  <div class="container nav">
+    <a class="brand" href="index.html"><span class="brand-mark">V</span><span>Voytana</span></a>
+    <nav class="nav-links"><a href="index.html">Home</a><a href="chi-siamo.html">Chi siamo</a><a href="blog.html">Guide</a><a href="faq.html">FAQ</a><a href="contatti.html">Contatti</a></nav>
+    <div class="nav-actions">
+      <a class="btn btn-secondary" href="contatti.html">Assistenza</a>
+      <a class="btn btn-primary" href="index.html#search">Trova un viaggio</a>
     </div>
   </div>
-  <nav class="mobile-nav" id="mobileNav">
-    <button data-category="weekend">Weekend</button>
-    <button data-category="lowcost">Low cost</button>
-    <button data-category="villaggi">Villaggi</button>
-    <button data-category="surprise">Sorprendimi</button>
-    <button data-category="crociere">Crociere</button>
-  </nav>
 </header>
 
-<main id="top">
-  <section class="hero">
-    <div class="hero-bg"></div>
-    <div class="container hero-inner">
-      <span class="eyebrow">IL PRIMO MOTORE DI VIAGGIO BUDGET-FIRST</span>
-      <h1>Dimmi il tuo budget.<br><span>Al viaggio pensiamo noi.</span></h1>
-      <p class="hero-copy">Scegli quanto vuoi spendere. Voytana ti mostra solo proposte compatibili con il budget, tre alla volta, senza confusione.</p>
-
-      <div class="category-grid">
-        <button class="category-card active" data-category="weekend"><span>◷</span><div><strong>Weekend</strong><small>1, 2 o 3 giorni</small></div></button>
-        <button class="category-card" data-category="lowcost"><span>€</span><div><strong>Low cost</strong><small>Risparmio intelligente</small></div></button>
-        <button class="category-card" data-category="villaggi"><span>⌂</span><div><strong>Villaggi</strong><small>Famiglia e relax</small></div></button>
-        <button class="category-card special" data-category="surprise"><span>✦</span><div><strong>Sorprendimi</strong><small>Lasciati guidare</small></div></button>
-        <button class="category-card" data-category="crociere"><span>⚓</span><div><strong>Crociere</strong><small>Mare e itinerari</small></div></button>
+<main>
+<section class="hero">
+  <div class="container hero-grid">
+    <div>
+      <div class="eyebrow">Viaggi pensati partendo dal tuo budget</div>
+      <h1>Dimmi il tuo budget. Al viaggio pensiamo noi.</h1>
+      <p class="lead">Imposta quanto vuoi spendere, scegli date e viaggiatori. Voytana seleziona poche proposte semplici da confrontare, senza sommergerti di risultati.</p>
+      <div class="chips">
+        <button class="chip active" data-type="Tutti">Tutti</button>
+        <button class="chip" data-type="Weekend">Weekend</button>
+        <button class="chip" data-type="Low Cost">Low Cost</button>
+        <button class="chip" data-type="Villaggi Famiglia">Villaggi famiglia</button>
+        <button class="chip" data-type="Mare">Mare</button>
+        <button class="chip" data-type="Cultura">Cultura</button>
       </div>
+      <div class="meta"><span>✓ Budget sotto controllo</span><span>✓ Tre proposte alla volta</span><span>✓ Confronto semplice</span></div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-badge">
+        <strong>Un'esperienza più semplice</strong>
+        <div style="color:var(--muted)">Meno confusione, più chiarezza. Ogni proposta è scelta per restare entro il budget selezionato.</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-      <section class="search-shell">
-        <div class="budget-box">
-          <div class="budget-top">
-            <div><small>BUDGET TOTALE MASSIMO</small><strong><span id="budgetValue">700</span> €</strong></div>
-            <span class="budget-status" id="budgetStatus">Nessuna proposta supererà questa cifra</span>
-          </div>
-          <input id="budgetRange" type="range" min="300" max="5000" value="700" step="50" />
-          <div class="range-labels"><span>300 €</span><span>2.650 €</span><span>5.000 €</span></div>
-        </div>
-
+<section id="search">
+  <div class="container">
+    <div class="search-card">
+      <form id="searchForm">
         <div class="search-grid">
-          <label class="field">
-            <span>Località</span>
-            <div class="control"><b>⌖</b><input id="destinationInput" placeholder="Qualsiasi località" /></div>
-          </label>
-          <label class="field">
-            <span>Partenza</span>
-            <div class="control"><b>◫</b><input id="departureDate" type="date" /></div>
-          </label>
-          <label class="field">
-            <span>Ritorno</span>
-            <div class="control"><b>◫</b><input id="returnDate" type="date" /></div>
-          </label>
-          <label class="field">
-            <span>Camere e ospiti</span>
-            <button class="control guest-button" id="guestBtn"><b>◎</b><span id="guestSummary">1 camera · 2 adulti</span></button>
-          </label>
-          <button class="search-btn" id="searchBtn">Trova 3 proposte <span>→</span></button>
+          <div class="field"><label>Partenza</label><input value="Napoli" aria-label="Partenza"></div>
+          <div class="field"><label>Destinazione</label><input id="destination" placeholder="Qualsiasi località" aria-label="Destinazione"></div>
+          <div class="field"><label>Data di partenza</label><input type="date" aria-label="Data di partenza"></div>
+          <div class="field"><label>Rientro</label><input type="date" aria-label="Data di rientro"></div>
+          <div class="field"><label>Ospiti</label><select aria-label="Ospiti"><option>2 adulti</option><option>1 adulto</option><option>2 adulti, 1 bambino</option><option>2 adulti, 2 bambini</option></select></div>
         </div>
-
-        <div class="transport-row">
-          <span>Come vuoi viaggiare?</span>
-          <button class="transport active" data-transport="volo">✈ Volo</button>
-          <button class="transport" data-transport="auto">🚗 Auto</button>
-          <button class="transport" data-transport="treno">🚆 Treno</button>
-          <button class="transport" data-transport="nave">⛴ Nave</button>
-          <button class="transport" data-transport="bus">🚌 Bus</button>
+        <div class="budget-row">
+          <div>
+            <label for="budget" style="font-weight:900">Budget massimo totale</label>
+            <input id="budget" type="range" min="300" max="1800" step="50" value="700">
+          </div>
+          <div class="budget-value" id="budgetValue">700 €</div>
         </div>
-      </section>
-
-      <div class="trust-row">
-        <span>✓ Solo proposte entro budget</span>
-        <span>✓ Prime 3 proposte curate</span>
-        <span>✓ Prezzi demo dichiarati</span>
-      </div>
-    </div>
-  </section>
-
-  <section class="results" id="results">
-    <div class="container">
-      <div class="results-head">
-        <div>
-          <span class="eyebrow dark">LE PRIME 3 PROPOSTE</span>
-          <h2>Scelte per il tuo budget</h2>
-          <p id="resultsSummary">Budget massimo 700 €, località qualsiasi, viaggio in volo.</p>
+        <div style="display:flex;justify-content:flex-end;margin-top:16px">
+          <button class="btn btn-primary" type="submit">Cerca 3 proposte</button>
         </div>
-        <div class="head-actions">
-          <button id="sortBtn">Ordina: più vicino al budget</button>
-          <button id="resetBtn">Reimposta</button>
-        </div>
-      </div>
-
-      <div class="empty-state" id="emptyState">
-        <h3>Nessuna proposta compatibile</h3>
-        <p>Prova ad aumentare leggermente il budget o a cambiare categoria e mezzo di trasporto.</p>
-      </div>
-
-      <div class="cards" id="cards"></div>
-
-      <div class="more-area">
-        <button id="moreBtn" class="more-btn">Mostrami altre 3</button>
-        <p>Mostriamo poche alternative alla volta per aiutarti a scegliere meglio.</p>
-      </div>
+      </form>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="how">
-    <div class="container">
-      <div class="section-center">
-        <span class="eyebrow dark">SEMPLICE DAVVERO</span>
-        <h2>Tre passaggi. Nessuna confusione.</h2>
-      </div>
-      <div class="steps">
-        <article><span>01</span><h3>Imposta il budget</h3><p>Decidi la cifra massima che vuoi spendere.</p></article>
-        <article><span>02</span><h3>Ricevi tre proposte</h3><p>Voytana seleziona solo opzioni compatibili.</p></article>
-        <article><span>03</span><h3>Scegli e prenota</h3><p>Quando collegheremo i partner, il tasto Prenota aprirà l’offerta reale.</p></article>
-      </div>
+<section id="results">
+  <div class="container">
+    <div class="section-head">
+      <div><div class="eyebrow">Proposte selezionate</div><h2>Viaggi compatibili con il tuo budget</h2><p id="resultCount"></p></div>
+      <button class="btn btn-secondary" id="moreTrips">Mostrami altre 3</button>
     </div>
-  </section>
+    <div class="cards" id="resultsGrid"></div>
+  </div>
+</section>
 
-  <section class="booking-band">
-    <div class="container booking-band-inner">
-      <div><span class="eyebrow light">PRONTO A PARTIRE?</span><h2>Scegli una proposta e prenota</h2><p>Le prenotazioni reali saranno attivate tramite i partner affiliati.</p></div>
-      <button id="globalBookBtn">Prenota ora</button>
+<section>
+  <div class="container">
+    <div class="section-head"><div><div class="eyebrow">Perché Voytana</div><h2>Meno scelte, decisioni migliori</h2></div></div>
+    <div class="features">
+      <div class="feature"><div class="feature-icon">€</div><h3>Budget-first</h3><p style="color:var(--muted)">Il budget viene prima della destinazione e guida tutta la selezione.</p></div>
+      <div class="feature"><div class="feature-icon">3</div><h3>Tre proposte</h3><p style="color:var(--muted)">Poche alternative curate, facili da confrontare e comprendere.</p></div>
+      <div class="feature"><div class="feature-icon">✓</div><h3>Trasparenza</h3><p style="color:var(--muted)">Prezzo finale, disponibilità e condizioni vengono confermati dal partner.</p></div>
+      <div class="feature"><div class="feature-icon">↗</div><h3>Partner selezionati</h3><p style="color:var(--muted)">Voytana prepara collegamenti con operatori affidabili del settore viaggi.</p></div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="investors" id="investors">
-    <div class="container investors-grid">
-      <div>
-        <span class="eyebrow light">INVESTITORI E PARTNER</span>
-        <h2>Costruiamo il futuro dei viaggi budget-first</h2>
-        <p>Voytana punta a rendere la ricerca di viaggio più semplice, trasparente e centrata sulla capacità di spesa reale dell’utente.</p>
-        <a href="mailto:thiagolama@libero.it" class="investor-btn">Scrivi per investire</a>
-      </div>
-      <aside class="investor-card">
-        <small>VOYTANA INVESTOR DESK</small>
-        <h3>Parliamone direttamente</h3>
-        <p>Pitch, roadmap, partnership, affiliazioni e sviluppo internazionale.</p>
-        <ul><li>Visione e posizionamento</li><li>Strategia di crescita</li><li>Opportunità di partnership</li></ul>
-      </aside>
+<section>
+  <div class="container trust">
+    <div>
+      <div class="eyebrow">Fiducia prima di tutto</div>
+      <h2>Una promessa semplice: niente sorprese sul budget</h2>
+      <p class="lead">Voytana non presenta un prezzo come definitivamente prenotabile finché non viene verificato sul sito del fornitore. La nostra selezione serve a orientarti rapidamente e con chiarezza.</p>
+      <a class="btn btn-secondary" href="trasparenza.html">Come funzionano prezzi e partner</a>
     </div>
-  </section>
+    <ul class="list-clean">
+      <li>✓ Nessuna proposta sopra il budget selezionato.</li>
+      <li>✓ Informazioni chiare prima del reindirizzamento.</li>
+      <li>✓ Nessuna dichiarazione di partnership non ancora attiva.</li>
+      <li>✓ Contatti reali e pagine legali accessibili.</li>
+    </ul>
+  </div>
+</section>
 
-  <section class="contact" id="contact">
-    <div class="container contact-grid">
-      <div><span class="eyebrow dark">CONTATTI</span><h2>Contatta Voytana</h2><p>Per collaborazioni, investimenti o informazioni sul progetto.</p></div>
-      <div class="contact-cards">
-        <a href="mailto:thiagolama@libero.it"><span>✉</span><div><small>Email</small><strong>thiagolama@libero.it</strong></div></a>
-        <a href="tel:+393665966609"><span>☎</span><div><small>Telefono</small><strong>366 596 6609</strong></div></a>
-      </div>
+<section>
+  <div class="container">
+    <div class="section-head"><div><div class="eyebrow">Guide Voytana</div><h2>Idee per viaggiare meglio</h2></div><a href="blog.html" class="btn btn-secondary">Tutte le guide</a></div>
+    <div class="blog-grid">
+      <article class="article-card"><h3>Weekend in Europa con meno di 500 €</h3><p>Come scegliere città, durata e periodo senza perdere il controllo della spesa.</p><a href="blog.html">Leggi la guida →</a></article>
+      <article class="article-card"><h3>Vacanze in famiglia: cosa valutare</h3><p>Trattamento, servizi, distanza e ritmo del viaggio spiegati in modo semplice.</p><a href="blog.html">Leggi la guida →</a></article>
+      <article class="article-card"><h3>Come leggere un prezzo di viaggio</h3><p>La differenza tra prezzo indicativo, disponibilità reale e costo finale.</p><a href="trasparenza.html">Scopri di più →</a></article>
     </div>
-  </section>
+  </div>
+</section>
 </main>
 
+<div class="modal" id="modal">
+  <div class="modal-box">
+    <div class="modal-top"><h3 id="modalTitle">Dettagli</h3><button class="close" onclick="closeModal()">×</button></div>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+
 <footer>
-  <div class="container footer-grid">
-    <div><a href="#top" class="brand"><span class="brand-mark">V</span><span>Voytana</span></a><p>Dimmi il tuo budget. Al viaggio pensiamo noi.</p></div>
-    <div><h4>Scopri</h4><a href="#results">Proposte</a><a href="#investors">Investitori</a><a href="#contact">Contatti</a></div>
-    <div><h4>Contatti</h4><a href="mailto:thiagolama@libero.it">thiagolama@libero.it</a><a href="tel:+393665966609">366 596 6609</a><a href="https://www.voytana.com">www.voytana.com</a></div>
-  </div>
-  <div class="container footer-bottom">© 2026 Voytana · Demo funzionale. Prezzi e disponibilità sono illustrativi fino all’integrazione dei partner.</div>
-</footer>
-
-<div class="modal" id="guestModal">
-  <div class="modal-box">
-    <div class="modal-head"><h3>Camere e ospiti</h3><button data-close="guestModal">×</button></div>
-    <div class="guest-row"><div><strong>Camere</strong></div><div class="counter"><button data-key="rooms" data-delta="-1">−</button><span id="roomsCount">1</span><button data-key="rooms" data-delta="1">＋</button></div></div>
-    <div class="guest-row"><div><strong>Adulti</strong><small>18 anni o più</small></div><div class="counter"><button data-key="adults" data-delta="-1">−</button><span id="adultsCount">2</span><button data-key="adults" data-delta="1">＋</button></div></div>
-    <div class="guest-row"><div><strong>Bambini</strong><small>0–17 anni</small></div><div class="counter"><button data-key="children" data-delta="-1">−</button><span id="childrenCount">0</span><button data-key="children" data-delta="1">＋</button></div></div>
-    <div id="childrenAges"></div>
-    <button class="modal-confirm" id="applyGuests">Conferma</button>
-  </div>
-</div>
-
-<div class="modal" id="detailsModal">
-  <div class="modal-box">
-    <div class="modal-head"><h3 id="detailsTitle">Dettagli proposta</h3><button data-close="detailsModal">×</button></div>
-    <div id="detailsContent"></div>
-  </div>
-</div>
-
-<div class="modal" id="bookingModal">
-  <div class="modal-box">
-    <div class="modal-head"><h3>Prenotazione</h3><button data-close="bookingModal">×</button></div>
-    <div class="booking-message">
-      <span class="booking-icon">✓</span>
-      <h4>Collegamento pronto</h4>
-      <p>Questo pulsante verrà collegato all’offerta reale del partner affiliato. Per ora la homepage resta una demo trasparente.</p>
-      <a href="mailto:thiagolama@libero.it">Contatta Voytana</a>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div class="brand"><span class="brand-mark">V</span><span>Voytana</span></div>
+        <p style="color:var(--muted)">La piattaforma budget-first che semplifica la scelta del viaggio con poche proposte curate e un budget sempre sotto controllo.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Voytana</h4>
+        <a href="chi-siamo.html">Chi siamo</a>
+        <a href="blog.html">Guide di viaggio</a>
+        <a href="faq.html">Domande frequenti</a>
+        <a href="contatti.html">Contatti</a>
+      </div>
+      <div class="footer-col">
+        <h4>Informazioni legali</h4>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="cookie.html">Cookie Policy</a>
+        <a href="termini.html">Termini e condizioni</a>
+        <a href="trasparenza.html">Trasparenza prezzi e partner</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contatti</h4>
+        <a href="mailto:thiagolama@libero.it">thiagolama@libero.it</a>
+        <a href="tel:+393665966609">+39 366 596 6609</a>
+        <span style="color:var(--muted)">Italia</span>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Voytana. Tutti i diritti riservati.</span>
+      <span>Prezzi e disponibilità vengono confermati dal fornitore prima dell'acquisto.</span>
     </div>
   </div>
-</div>
-
-<div class="toast" id="toast"></div>
-<script src="script.js"></script>
+</footer>
+<script src="assets/app.js"></script>
 </body>
 </html>
