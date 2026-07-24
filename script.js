@@ -45,7 +45,15 @@ function render(){
  $("#moreBtn").style.display=list.length>state.visible?"inline-block":"none";
  $$("[data-fav]").forEach(b=>b.onclick=()=>{state.favorites.has(b.dataset.fav)?state.favorites.delete(b.dataset.fav):state.favorites.add(b.dataset.fav);render();toast("Preferiti aggiornati")});
  $$("[data-details]").forEach(b=>b.onclick=()=>openDetails(b.dataset.details));
- $$("[data-book]").forEach(b=>b.onclick=()=>openModal("bookingModal"));
+ $$("[data-book]").forEach(b=>b.onclick=()=>{
+  const city=b.dataset.book;
+  const links={
+    "Palma di Maiorca":"https://klook.tpm.li/TiXgKF8x",
+    "Budapest":"https://klook.tpm.li/TiXgKF8x",
+    "Tenerife":"https://klook.tpm.li/TiXgKF8x"
+  };
+  window.open(links[city]||"https://klook.tpm.li/TiXgKF8x","_blank");
+});
 }
 function setCategory(cat){
  state.category=cat;state.visible=3;
