@@ -50,7 +50,8 @@ function render(){
   const links={
     "Palma di Maiorca":"https://klook.tpm.li/TiXgKF8x",
     "Budapest":"https://klook.tpm.li/TiXgKF8x",
-    "Tenerife":"https://klook.tpm.li/TiXgKF8x"
+    "Tenerife":"https://klook.tpm.li/TiXgKF8x",
+  "Positano":"https://tp.media/r?marker=754768&trs=553745&p=4110&u=https%3A%2F%2Fwww.klook.com%2Fen-US%2Fsearch%2F%3Fkeyword%3DPositano&campaign_id=137"
   };
   window.open(links[city]||"https://klook.tpm.li/TiXgKF8x","_blank");
 });
