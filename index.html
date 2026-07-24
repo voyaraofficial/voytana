@@ -238,15 +238,11 @@ function render(){
  if(!slice.length)cards.innerHTML='<p>Nessuna proposta trovata. Prova a lasciare libera la destinazione.</p>';
 }
 function book(city){
- const params=new URLSearchParams({
-   ss:city,
-   checkin:document.getElementById("dateFrom").value||"",
-   checkout:document.getElementById("dateTo").value||"",
-   group_adults:String(guests.adults),
-   group_children:String(guests.children),
-   no_rooms:String(guests.rooms)
- });
- window.open("https://www.booking.com/searchresults.it.html?"+params.toString(),"_blank","noopener");
+  const links={
+    "Positano":"https://tp.media/r?marker=754768&trs=553745&p=4110&u=https%3A%2F%2Fwww.klook.com%2Fen-US%2Fsearch%2F%3Fkeyword%3DPositano&campaign_id=137"
+  };
+  const fallback="https://tp.media/r?marker=754768&trs=553745&p=4110&u="+encodeURIComponent("https://www.klook.com/en-US/search/?keyword="+city)+"&campaign_id=137";
+  window.open(links[city]||fallback,"_blank","noopener");
 }
 document.getElementById("guestButton").onclick=e=>{e.stopPropagation();document.getElementById("guestPopover").classList.toggle("open")};
 document.getElementById("applyGuests").onclick=()=>{updateGuestText();document.getElementById("guestPopover").classList.remove("open");render()};
